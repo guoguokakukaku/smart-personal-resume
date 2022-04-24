@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { Button, Modal, Timeline } from 'antd'
-import './App.css'
+import './App.less'
 import { SmileOutlined } from '@ant-design/icons';
 
 const App: FC = () => {
