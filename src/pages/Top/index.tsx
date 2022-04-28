@@ -1,19 +1,29 @@
-import React, { FC, useState } from 'react'
-import { Layout } from 'antd'
+import React, { FC, useEffect, useState } from 'react'
+import { Layout, Radio } from 'antd'
 import './index.less'
 import male from '../../assets/male.png'
 import female from '../../assets/female.png'
 import { ConfigProvider, Button, Divider } from 'antd'
+import { drawBar, drawRadar0, drawRadar1 } from '../../util/drawCharts'
+import Chart from 'chart.js/auto'
+import { hex2rgb, getStyleFromCSSClass } from '../../util/common'
 
-const { Header, Footer, Sider, Content } = Layout
+let experienceChart: Chart | undefined = undefined
+let skillChart: Chart | undefined = undefined
 
 const Top: FC = () => {
+  console.log('top', experienceChart, skillChart)
   const [selfImg, setSelfImg] = useState(male)
+  const [selfRadarChartColor, setSelfRadarChartColor] = useState<string>(
+    hex2rgb(getStyleFromCSSClass('canvas-panel', 'color'))
+  )
+  const [radarType, setRadarType] = useState<string>('0')
 
   const changePrimaryColor = () => {
     // メインカラーを変更する
     const mergedNextColor = {
-      primaryColor: '#f759ab',
+      // primaryColor: '#f759ab',
+      primaryColor: '#7cb305',
     }
     ConfigProvider.config({
       theme: mergedNextColor,
@@ -23,7 +33,40 @@ const Top: FC = () => {
   const handleClick = () => {
     changePrimaryColor()
     setSelfImg(female)
+    setSelfRadarChartColor(hex2rgb(getStyleFromCSSClass('canvas-panel', 'color')))
   }
+
+  const handleChangeExperienceChart = (type: string) => {
+    if (type === '0') {
+      setRadarType('0')
+    } else {
+      setRadarType('1')
+    }
+  }
+
+  useEffect(() => {
+    console.log('experienceChart', experienceChart)
+    const ctx = document.getElementById('experienceChart') as HTMLCanvasElement
+    if (experienceChart !== undefined) {
+      experienceChart.destroy()
+      experienceChart = undefined
+    }
+    if (radarType === '0') {
+      experienceChart = drawRadar0(ctx, selfRadarChartColor)
+    } else {
+      experienceChart = drawRadar1(ctx, selfRadarChartColor)
+    }
+  }, [selfRadarChartColor, radarType])
+
+  useEffect(() => {
+    console.log('skillChart', skillChart)
+    const ctx = document.getElementById('skillChart') as HTMLCanvasElement
+    if (skillChart !== undefined) {
+      skillChart.destroy()
+      skillChart = undefined
+    }
+    skillChart = drawBar(ctx)
+  }, [])
 
   return (
     <div className='top'>
@@ -67,16 +110,20 @@ const Top: FC = () => {
         </div>
         <Divider />
         <h2 className='h2'>私には何ができますか</h2>
-        {/* <div className='welcome_content'>
-          私はシステムエンジニアです。
-          <br />
-          プログラミング、Webデザインが大好きです。
-          <br />
-          今までの経験を活かしながら更なる成長を求めています。
-          <br />
-        </div> */}
-
-        <p className='heading tag'>スキル</p>
+        <div className='canvas-panel'>
+          <canvas id='experienceChart' height='200' />
+          <div>
+            <Radio.Group value={radarType} onChange={(e) => handleChangeExperienceChart(e.target.value)}>
+              <Radio.Button value='0'>担当工程</Radio.Button>
+              <Radio.Button value='1'>業務経験</Radio.Button>
+            </Radio.Group>
+          </div>
+        </div>
+        <Divider />
+        <h2 className='h2'>スキル情報</h2>
+        <div className='canvas-panel'>
+          <canvas id='skillChart' height={300} />
+        </div>
 
         <Button type='primary' onClick={handleClick}>
           aaa
