@@ -7,7 +7,7 @@ module.exports = {
       options: {
         customizeTheme: {
           // '@primary-color': '#1DA57A',
-          '@primary-color': '#000',// default color
+          // '@primary-color': '#1DA57A',// default color
         },
       },
     },

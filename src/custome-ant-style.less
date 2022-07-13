@@ -1,4 +1,7 @@
 // @primary-color: rgb(106, 90, 205);
+html {
+  --antd-wave-shadow-color: var(--ant-primary-7) !important;
+}
 
 :root {
   --ant-primary-color: @primary-color;
@@ -20,14 +23,30 @@
   background: var(--ant-primary-5) !important;
 }
 
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-  border-color: var(--ant-primary-color) !important;
-}
-
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
   background-color: var(--ant-primary-color) !important;
 }
 
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  border-color: var(--ant-primary-color) !important;
   color: var(--ant-primary-7) !important;
+}
+
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  color: #fff !important;
+  background: var(--ant-primary-7) !important;
+  border-color: var(--ant-primary-7) !important;
+}
+
+.ant-radio-button-wrapper:hover {
+  color: var(--ant-primary-7) !important;
+}
+
+::selection {
+  background: var(--ant-primary-7) !important;
+}
+
+.ant-input-search .ant-input:hover, .ant-input-search .ant-input:focus {
+  border-color: var(--ant-primary-7) !important;
+  box-shadow: 0px 0px 1px 0px var(--ant-primary-7) !important;
 }

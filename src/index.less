@@ -3,6 +3,7 @@
 @import 'custome-theme-file.less'; // 用于覆盖上面定义的变量
 @import 'custome-ant-style.less'; // 覆盖ant的样式为变量类型
 
+
 body {
   // margin: 1px;
   // font-family: "Noto Serif JP",serif !important;
@@ -11,3 +12,49 @@ body {
   // font-feature-settings: "palt" !important;
   // font-weight: 500;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: lightgray;
+  text-align: center;
+}
+
+.page {
+  width: 100%;
+  max-width: 768px;
+}
+
+.header {
+  height: 9vh;
+  background-color: var(--ant-primary-1);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 8px;
+  border: 1px solid var(--ant-primary-3);
+  width: 100%;
+  .back-arrow {
+    margin: 0 8px;
+    color: var(--ant-primary-6);
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+// @media screen and (min-width: 768px) {
+//   .header {
+//     min-width: unset;
+//     width: 768px;
+//     background-color: aquamarine;
+//   }
+// }
+
+// @media screen and (max-width: 500px) {
+//   .header {
+//     width: 300px;
+//   }
+// }
+

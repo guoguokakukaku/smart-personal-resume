@@ -7,23 +7,29 @@ import { ConfigProvider, Button, Divider } from 'antd'
 import { drawBar, drawRadar0, drawRadar1 } from '../../util/drawCharts'
 import Chart from 'chart.js/auto'
 import { hex2rgb, getStyleFromCSSClass } from '../../util/common'
+import { useNavigate } from 'react-router-dom'
 
 let experienceChart: Chart | undefined = undefined
 let skillChart: Chart | undefined = undefined
 
 const Top: FC = () => {
   console.log('top', experienceChart, skillChart)
+  useEffect(() => {
+    console.log('Top')
+  }, [])
   const [selfImg, setSelfImg] = useState(male)
   const [selfRadarChartColor, setSelfRadarChartColor] = useState<string>(
     hex2rgb(getStyleFromCSSClass('canvas-panel', 'color'))
   )
   const [radarType, setRadarType] = useState<string>('0')
+  const navigate = useNavigate()
 
   const changePrimaryColor = () => {
     // メインカラーを変更する
     const mergedNextColor = {
       // primaryColor: '#f759ab',
-      primaryColor: '#7cb305',
+      // primaryColor: '#7cb305',
+      primaryColor: '#ff0000',
     }
     ConfigProvider.config({
       theme: mergedNextColor,
@@ -42,6 +48,10 @@ const Top: FC = () => {
     } else {
       setRadarType('1')
     }
+  }
+
+  const handleTimeLineClick = () => {
+    navigate('/timeLine')
   }
 
   useEffect(() => {
@@ -69,14 +79,16 @@ const Top: FC = () => {
   }, [])
 
   return (
-    <div className='top'>
+    <div className='page top'>
       <div className='header'>
-        <Button>English</Button>
-        <Button>開発履歴</Button>
+        <Button type='primary'>English</Button>
+        <Button type='primary' onClick={handleTimeLineClick}>
+          開発履歴
+        </Button>
       </div>
 
       <div>
-        <img src={selfImg} alt='Logo' className='selfy_logo' />
+        <img src={selfImg} alt='Logo' className='selfy-logo' />
       </div>
 
       <section className='section'>
@@ -109,18 +121,23 @@ const Top: FC = () => {
           </ul>
         </div>
         <Divider />
-        <h2 className='h2'>私には何ができますか</h2>
+        <h2>私には何ができますか</h2>
         <div className='canvas-panel'>
-          <canvas id='experienceChart' height='200' />
+          <canvas id='experienceChart' className='aaaaaaa' />
           <div>
-            <Radio.Group value={radarType} onChange={(e) => handleChangeExperienceChart(e.target.value)}>
+            <Radio.Group
+              value={radarType}
+              onChange={(e) => handleChangeExperienceChart(e.target.value)}
+              optionType='button'
+              buttonStyle='solid'
+            >
               <Radio.Button value='0'>担当工程</Radio.Button>
               <Radio.Button value='1'>業務経験</Radio.Button>
             </Radio.Group>
           </div>
         </div>
         <Divider />
-        <h2 className='h2'>スキル情報</h2>
+        <h2>スキル情報</h2>
         <div className='canvas-panel'>
           <canvas id='skillChart' height={300} />
         </div>

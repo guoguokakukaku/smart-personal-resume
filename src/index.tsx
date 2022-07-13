@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 import './index.less'
 import App from './App'
 import Top from './pages/Top'
+import Router from './router'
 import TimeLine from './pages/TimeLine'
-import Projects from './pages/Projects'
 import reportWebVitals from './reportWebVitals'
 import { ConfigProvider } from 'antd'
 
@@ -21,7 +21,7 @@ ConfigProvider.config({
 
 root.render(
   <React.StrictMode>
-    <Top />
+    <Router />
   </React.StrictMode>
 )
 
