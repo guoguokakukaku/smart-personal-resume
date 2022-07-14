@@ -102,6 +102,13 @@ const Top: FC = () => {
         </div>
         <Divider />
 
+        <h2>自己PR</h2>
+        <div className='content'>
+          ほぼ20年の開発経験があり、フロントエンド、バックエンドともに経験を持っていて<br />
+          今までの経験を活かしながらさらに最新のテクニックを勉強してお客様のニーズを理解した上に役立つ提案をできるよう頑張っています！
+        </div>
+        <Divider />
+
         <h2>価値観</h2>
         <div className='content'>
           <ul>
