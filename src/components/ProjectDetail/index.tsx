@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { attachTypeApi } from 'antd/lib/message'
 import { BlockOutlined, MessageOutlined, TagOutlined, DesktopOutlined, AppstoreAddOutlined } from '@ant-design/icons'
 import ProjectSummary from '../ProjectSummary'
+import react from '../../assets/react.png'
 
 type Props = {
   text: string
@@ -16,7 +17,7 @@ const ProjectDetail: FC<Props> = (props) => {
     <div className='project-detail'>
       <div className='title'>【React】あああああサービス開発</div>
       <div className='project-flex-row'>
-        <DesktopOutlined className='item-icon' />
+        <DesktopOutlined className='common-icon' />
         <div className='sub-title'>開発環境</div>
       </div>
       <div className='project-flex-row'>
@@ -26,7 +27,7 @@ const ProjectDetail: FC<Props> = (props) => {
       </div>
       <Divider className='divider' />
       <div className='project-flex-row'>
-        <TagOutlined className='item-icon' />
+        <TagOutlined className='common-icon' />
         <div className='sub-title'>担当工程</div>
       </div>
       <div className='project-flex-row'>
@@ -39,7 +40,7 @@ const ProjectDetail: FC<Props> = (props) => {
       </div>
       <Divider className='divider' />
       <div className='project-flex-row'>
-        <MessageOutlined className='item-icon' />
+        <MessageOutlined className='common-icon' />
         <div className='sub-title'>案件詳細</div>
       </div>
       <div className='project-flex-row'>
@@ -54,7 +55,7 @@ const ProjectDetail: FC<Props> = (props) => {
       </div>
       <Divider className='divider' />
       <div className='project-flex-row'>
-        <AppstoreAddOutlined className='item-icon' />
+        <AppstoreAddOutlined className='common-icon' />
         <div className='sub-title'>業務内容</div>
       </div>
       <div className='project-flex-row'>
@@ -68,14 +69,11 @@ const ProjectDetail: FC<Props> = (props) => {
       </div>
       <Divider className='divider' />
       <div className='project-flex-row'>
-        <BlockOutlined className='item-icon' />
+        <BlockOutlined className='common-icon' />
         <div className='sub-title'>画面キャプチャ</div>
       </div>
       <div className='project-flex-row-center'>
-        <Image
-          className='img'
-          src='https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp'
-        />
+        <Image className='img' src={react} />
         <Image
           className='img'
           src='https://gw.alipayobjects.com/zos/antfincdn/LlvErxo8H9/photo-1503185912284-5271ff81b9a8.webp'

@@ -1,11 +1,10 @@
 import React, { FC, useState, useEffect } from 'react'
 import { Timeline, Input } from 'antd'
-import { LeftOutlined, SmileOutlined, ArrowLeftOutlined } from '@ant-design/icons'
-import { Modal, Button } from 'antd'
 import './index.less'
-import react from '../../assets/react.png'
 import { useNavigate } from 'react-router-dom'
 import ProjectSummary from '../../components/ProjectSummary'
+import Header from '../../components/Header'
+import { HEADER_TYPE } from '../../util/common'
 
 const { Search } = Input
 
@@ -14,55 +13,37 @@ const TimeLine: FC = () => {
   const navigate = useNavigate()
   useEffect(() => {
     console.log('TimeLine')
+    window.scrollTo(0, 0)
   }, [])
-  const showModal = () => {
-    // setIsModalVisible(true)
+
+  const handleShowProject = () => {
     navigate('/project')
   }
 
-  // const handleOk = () => {
-  //   setIsModalVisible(false)
-  // }
+  const handleNavBack = () => {
+    console.log('handleNavBack')
+    navigate(-1)
+  }
 
-  // const handleCancel = () => {
-  //   setIsModalVisible(false)
-  // }
-
-  const onSearch = () => {
-    console.log('aaaaaaaaa')
+  const handleSearch = () => {
+    console.log('onSearch')
   }
 
   return (
     <div className='page timeline'>
-      <div className='header'>
-        <ArrowLeftOutlined className='back-arrow' onClick={() => navigate(-1)} />
-        {/* <Search placeholder='input search text' allowClear enterButton='検索' size='large' /> */}
-        <Search className='search-button' placeholder='input search text' size='large' onSearch={onSearch} enterButton />
-      </div>
+      <Header type={HEADER_TYPE.SEARCH} title='' actionFuncs={[handleNavBack, handleSearch]} />
 
       <section className='section'>
-        {/* <Modal title='Basic Modal' visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Modal> */}
         <div>
           <Timeline>
             <Timeline.Item color='red'>
-              <ProjectSummary text='hello' cb={() => showModal()} />
+              <ProjectSummary text='hello' cb={() => handleShowProject()} />
             </Timeline.Item>
             <Timeline.Item color='green'>
-              <ProjectSummary text='hello' cb={() => showModal()} />
+              <ProjectSummary text='hello' cb={() => handleShowProject()} />
             </Timeline.Item>
             <Timeline.Item color='green'>
-              <ProjectSummary text='hello' cb={() => showModal()} />
+              <ProjectSummary text='hello' cb={() => handleShowProject()} />
             </Timeline.Item>
           </Timeline>
         </div>

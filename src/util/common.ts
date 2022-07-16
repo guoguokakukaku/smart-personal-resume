@@ -1,3 +1,9 @@
+export const HEADER_TYPE = {
+  TOP: '1',
+  SEARCH: '2',
+  COMMON: '3',
+}
+
 export function hex2rgb(hex: string) {
   return hex.slice(0, hex.length - 1) + ', 0.5)'
 }

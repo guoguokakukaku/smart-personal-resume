@@ -18,7 +18,7 @@ const ProjectSummary: FC<Props> = (props) => {
       <div className='title'>【React】あああああサービス開発</div>
       <div>
         <div className='project-flex-row'>
-          <DesktopOutlined className='item-icon' />
+          <DesktopOutlined className='common-icon' />
           <div className='sub-title'>開発環境</div>
         </div>
         <div className='project-flex-row'>
@@ -30,7 +30,7 @@ const ProjectSummary: FC<Props> = (props) => {
       <Divider className='divider' />
       <div>
         <div className='project-flex-row'>
-          <TagOutlined className='item-icon' />
+          <TagOutlined className='common-icon' />
           <div className='sub-title'>担当工程</div>
         </div>
         <div className='project-flex-row'>
@@ -45,7 +45,7 @@ const ProjectSummary: FC<Props> = (props) => {
       <Divider className='divider' />
       {/* <div>
         <div className='project-flex-row'>
-          <AppstoreAddOutlined className='item-icon' />
+          <AppstoreAddOutlined className='common-icon' />
           <div className='sub-title'>業務内容</div>
         </div>
         <div className='project-flex-row'>
@@ -59,7 +59,7 @@ const ProjectSummary: FC<Props> = (props) => {
         </div>
       </div>
       <Divider className='divider' /> */}
-      <div className='btn' onClick={() => props.cb()}>
+      <div className='common-button' onClick={() => props.cb()}>
         案件詳細はこちら
       </div>
     </div>

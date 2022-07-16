@@ -1,13 +1,15 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Layout, Radio } from 'antd'
+import { Radio } from 'antd'
 import './index.less'
 import male from '../../assets/male.png'
 import female from '../../assets/female.png'
-import { ConfigProvider, Button, Divider } from 'antd'
+import { ConfigProvider, Divider } from 'antd'
 import { drawBar, drawRadar0, drawRadar1 } from '../../util/drawCharts'
 import Chart from 'chart.js/auto'
 import { hex2rgb, getStyleFromCSSClass } from '../../util/common'
 import { useNavigate } from 'react-router-dom'
+import Header from '../../components/Header'
+import { HEADER_TYPE } from '../../util/common'
 
 let experienceChart: Chart | undefined = undefined
 let skillChart: Chart | undefined = undefined
@@ -80,12 +82,7 @@ const Top: FC = () => {
 
   return (
     <div className='page top'>
-      <div className='header'>
-        <Button type='primary'>English</Button>
-        <Button type='primary' onClick={handleTimeLineClick}>
-          開発履歴
-        </Button>
-      </div>
+      <Header type={HEADER_TYPE.TOP} title='' actionFuncs={[]} />
 
       <div>
         <img src={selfImg} alt='Logo' className='selfy-logo' />
@@ -104,7 +101,8 @@ const Top: FC = () => {
 
         <h2>自己PR</h2>
         <div className='content'>
-          ほぼ20年の開発経験があり、フロントエンド、バックエンドともに経験を持っていて<br />
+          ほぼ20年の開発経験があり、フロントエンド、バックエンドともに経験を持っていて
+          <br />
           今までの経験を活かしながらさらに最新のテクニックを勉強してお客様のニーズを理解した上に役立つ提案をできるよう頑張っています！
         </div>
         <Divider />
@@ -149,9 +147,16 @@ const Top: FC = () => {
           <canvas id='skillChart' height={300} />
         </div>
 
-        <Button type='primary' onClick={handleClick}>
+        <Divider />
+        {/* <Button type='primary' onClick={handleClick}>
           aaa
-        </Button>
+        </Button> */}
+
+        <div className='footer'>
+          <div className='common-button' onClick={() => handleTimeLineClick()}>
+            開発履歴はこちら
+          </div>
+        </div>
       </section>
     </div>
   )
