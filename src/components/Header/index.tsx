@@ -14,7 +14,7 @@ import GmailLogo from '../../assets/Gmail_logo.svg';
 
 const { Search } = Input
 
-type Props = {
+interface Props {
   // 0: top画面, 1: timelin画面 2: 通常
   type: string
   title: string

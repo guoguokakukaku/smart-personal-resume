@@ -6,13 +6,19 @@ import { useNavigate } from 'react-router-dom'
 import ProjectDetail from '../../components/ProjectDetail'
 import Header from '../../components/Header'
 import { HEADER_TYPE } from '../../util/common'
+import { UserContext } from '../../hooks/UserContext'
 
 const Project: FC = () => {
+  const navigate = useNavigate()
+  const userContext = React.useContext(UserContext)
+  console.log('project page: ', userContext.user.basic.name)
+
   useEffect(() => {
-    console.log('Project')
+    if (!userContext.user.basic.name) {
+      navigate('/loading')
+    }
     window.scrollTo(0, 0)
   }, [])
-  const navigate = useNavigate()
 
   const handleNavBack = () => {
     console.log('handleNavBack')

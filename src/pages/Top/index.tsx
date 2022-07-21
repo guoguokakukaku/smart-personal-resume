@@ -10,21 +10,64 @@ import { hex2rgb, getStyleFromCSSClass } from '../../util/common'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/Header'
 import { HEADER_TYPE } from '../../util/common'
+import { UserContext } from '../../hooks/UserContext'
 
 let experienceChart: Chart | undefined = undefined
 let skillChart: Chart | undefined = undefined
 
 const Top: FC = () => {
-  console.log('top', experienceChart, skillChart)
-  useEffect(() => {
-    console.log('Top')
-  }, [])
+  const navigate = useNavigate()
+  const userContext = React.useContext(UserContext)
+  console.log('top page: ', userContext.user.basic.name)
   const [selfImg, setSelfImg] = useState(male)
   const [selfRadarChartColor, setSelfRadarChartColor] = useState<string>(
     hex2rgb(getStyleFromCSSClass('canvas-panel', 'color'))
   )
   const [radarType, setRadarType] = useState<string>('0')
-  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!userContext.user.basic.name) {
+      navigate('/loading')
+    }
+  })
+
+  useEffect(() => {
+    const ctx = document.getElementById('experienceChart') as HTMLCanvasElement
+    if (experienceChart !== undefined) {
+      experienceChart.destroy()
+      experienceChart = undefined
+    }
+    if (radarType === '0') {
+      experienceChart = drawRadar0(ctx, selfRadarChartColor)
+    } else {
+      experienceChart = drawRadar1(ctx, selfRadarChartColor)
+    }
+  }, [selfRadarChartColor, radarType])
+
+  useEffect(() => {
+    const ctx = document.getElementById('skillChart') as HTMLCanvasElement
+    if (skillChart !== undefined) {
+      skillChart.destroy()
+      skillChart = undefined
+    }
+    skillChart = drawBar(ctx)
+  }, [])
+
+  const handleChangeExperienceChart = (type: string) => {
+    if (type === '0') {
+      setRadarType('0')
+    } else {
+      setRadarType('1')
+    }
+  }
+
+  const handleTimeLineClick = () => {
+    userContext.user.basic.name = 'aaa'
+    // const user = {...userContext.user}
+    // user.basic.name = 'bbb'
+    // userContext.setUser(user)
+    // navigate('/timeLine')
+  }
 
   const changePrimaryColor = () => {
     // メインカラーを変更する
@@ -44,42 +87,6 @@ const Top: FC = () => {
     setSelfRadarChartColor(hex2rgb(getStyleFromCSSClass('canvas-panel', 'color')))
   }
 
-  const handleChangeExperienceChart = (type: string) => {
-    if (type === '0') {
-      setRadarType('0')
-    } else {
-      setRadarType('1')
-    }
-  }
-
-  const handleTimeLineClick = () => {
-    navigate('/timeLine')
-  }
-
-  useEffect(() => {
-    console.log('experienceChart', experienceChart)
-    const ctx = document.getElementById('experienceChart') as HTMLCanvasElement
-    if (experienceChart !== undefined) {
-      experienceChart.destroy()
-      experienceChart = undefined
-    }
-    if (radarType === '0') {
-      experienceChart = drawRadar0(ctx, selfRadarChartColor)
-    } else {
-      experienceChart = drawRadar1(ctx, selfRadarChartColor)
-    }
-  }, [selfRadarChartColor, radarType])
-
-  useEffect(() => {
-    console.log('skillChart', skillChart)
-    const ctx = document.getElementById('skillChart') as HTMLCanvasElement
-    if (skillChart !== undefined) {
-      skillChart.destroy()
-      skillChart = undefined
-    }
-    skillChart = drawBar(ctx)
-  }, [])
-
   return (
     <div className='page top'>
       <Header type={HEADER_TYPE.TOP} title='' actionFuncs={[]} />
@@ -89,6 +96,7 @@ const Top: FC = () => {
       </div>
 
       <section className='section'>
+        <h1>{userContext.user.basic.name}</h1>
         <h1>郭　維</h1>
         <h5>ITシステムエンジニア</h5>
         <Divider />

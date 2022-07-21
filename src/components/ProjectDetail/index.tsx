@@ -7,7 +7,7 @@ import { BlockOutlined, MessageOutlined, TagOutlined, DesktopOutlined, AppstoreA
 import ProjectSummary from '../ProjectSummary'
 import react from '../../assets/react.png'
 
-type Props = {
+interface Props {
   text: string
   cb: Function
 }

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { attachTypeApi } from 'antd/lib/message'
 import { SmileOutlined, TeamOutlined, TagOutlined, DesktopOutlined, AppstoreAddOutlined } from '@ant-design/icons'
 
-type Props = {
+interface Props {
   text: string
   cb: Function
 }

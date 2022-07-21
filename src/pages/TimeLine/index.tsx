@@ -5,16 +5,22 @@ import { useNavigate } from 'react-router-dom'
 import ProjectSummary from '../../components/ProjectSummary'
 import Header from '../../components/Header'
 import { HEADER_TYPE } from '../../util/common'
+import { UserContext } from '../../hooks/UserContext'
 
 const { Search } = Input
 
 const TimeLine: FC = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
   const navigate = useNavigate()
+  const userContext = React.useContext(UserContext)
+  console.log('timeline page: ', userContext.user.basic.name)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
   useEffect(() => {
-    console.log('TimeLine')
+    if (!userContext.user.basic.name) {
+      navigate('/loading')
+    }
     window.scrollTo(0, 0)
-  }, [])
+  })
 
   const handleShowProject = () => {
     navigate('/project')
