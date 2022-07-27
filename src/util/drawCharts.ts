@@ -5,11 +5,11 @@ export function drawBar(chartItem: CanvasRenderingContext2D | HTMLCanvasElement)
   return new Chart(chartItem, {
     type: 'bar',
     data: {
-      labels: ['Java', 'JavaScript', 'React', 'Phyon', 'SQL', 'Android'],
+      labels: ['Java', 'JavaScript', 'React', 'TypeScript', 'SQL', 'Android'],
       datasets: [
         {
           label: '単位（月）',
-          data: [12, 19, 3, 5, 2, 3],
+          data: [60, 36, 36, 1, 24, 12],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -43,11 +43,11 @@ export function drawBar(chartItem: CanvasRenderingContext2D | HTMLCanvasElement)
 export function drawRadar0(chartItem: CanvasRenderingContext2D | HTMLCanvasElement, color: string): Chart {
   console.log('drawRadar0');
   const data = {
-    labels: ['要件・基本設計', '詳細設計', 'コーディング', '試験', '運用保守'],
+    labels: ['要件・基本設計', '詳　細　設　計', 'コーディング', '試　験', '運用保守'],
     datasets: [
       {
         label: '熟練度参考値',
-        data: [65, 59, 90, 81, 56],
+        data: [60, 80, 90, 80, 75],
         fill: true,
         backgroundColor: color,
         borderColor: color,
@@ -74,12 +74,11 @@ export function drawRadar0(chartItem: CanvasRenderingContext2D | HTMLCanvasEleme
 export function drawRadar1(chartItem: CanvasRenderingContext2D | HTMLCanvasElement, color: string): Chart {
   console.log('drawRadar1');
   const data = {
-    labels: ['要件・基本設計', '詳細設計', 'コーディング', 'Web', '運用    '],
-    // labels: ['要件・基本設計', '詳細設計', 'コーディング', '試験', '運用保守'],
+    labels: ['Web情報管理システム', '車載機(Android)', '交　通', 'Androidアプリ', '認証サービス(SAAS)'],
     datasets: [
       {
         label: '熟練度参考値',
-        data: [35, 55, 56, 98, 23],
+        data: [80, 50, 50, 60, 75],
         fill: true,
         backgroundColor: color,
         borderColor: color,
