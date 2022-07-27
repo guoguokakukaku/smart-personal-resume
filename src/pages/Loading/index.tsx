@@ -1,40 +1,67 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useContext } from 'react'
 import { UserContext } from '../../hooks/UserContext'
-import { User } from '../../hooks/User'
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { fetchUserInfoFromJsonFile } from '../../mock/api'
+import { ConfigProvider } from 'antd'
 
 const Loading: FC = () => {
   const navigate = useNavigate()
-  const userContext = React.useContext(UserContext)
+  const userContext = useContext(UserContext)
   console.log('loading page: ', userContext.user.basic.name)
+
   useEffect(() => {
     if (!userContext.user.basic.name) {
-      setTimeout(() => {
-        const loadUser: User = {
-          basic: {
-            name: 'guowei',
-            sex: 0,
-            birthdate: '',
-            educational: '',
-            job_category: '',
-            personal_info: '',
-          },
-          pr: '',
-          personal_value_list: [],
-          customize_info: {
-            title: '',
-            info_list: [],
-          },
-          timeline_list: [],
+      let urlParamStr = window.location.search
+      // console.log('★', urlParamStr)
+
+      if (!urlParamStr) urlParamStr = 'u=guowei' // TODO default user
+      let user = ''
+      if (urlParamStr) {
+        //?を除去
+        urlParamStr = urlParamStr.substring(1)
+
+        //urlパラメータをオブジェクトにまとめる
+        console.log(urlParamStr.split('&').length) // 必ず1
+        user = urlParamStr.split('&')[0].split('=')[1] // this is a sample: guowei
+
+        if (user) {
+          const fetchData = async () => {
+            console.log('getUserInfoFromJsonFile start')
+            const data = await fetchUserInfoFromJsonFile(user)
+            data.basic.photo = require(`../../mock/resume/${user}/self.png`)
+            console.log('getUserInfoFromJsonFile end')
+            userContext.setUser(data)
+          }
+          fetchData().catch(console.error)
+        } else {
+          navigate('/error')
         }
-        userContext.setUser(loadUser)
-        setTimeout(() => {
-          navigate('/top')
-        }, 1000)
+      } else {
+        navigate('/error')
+      }
+    }
+  }, [navigate, userContext, userContext.user])
+
+  useEffect(() => {
+    if (userContext.user.basic.name) {
+      changePrimaryColor()
+      setTimeout(() => {
+        navigate('/top')
       }, 1000)
     }
-  }, [navigate, userContext])
+  })
+
+  const changePrimaryColor = () => {
+    // メインカラーを変更する
+    const mergedNextColor = {
+      // primaryColor: '#f759ab',
+      // primaryColor: '#7cb305',
+      primaryColor: userContext.user.basic.color,
+    }
+    ConfigProvider.config({
+      theme: mergedNextColor,
+    })
+  }
 
   return (
     <div>

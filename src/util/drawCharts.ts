@@ -1,6 +1,7 @@
 import Chart from 'chart.js/auto'
 
 export function drawBar(chartItem: CanvasRenderingContext2D | HTMLCanvasElement): Chart {
+  console.log('drawBar');
   return new Chart(chartItem, {
     type: 'bar',
     data: {
@@ -40,6 +41,7 @@ export function drawBar(chartItem: CanvasRenderingContext2D | HTMLCanvasElement)
 }
 
 export function drawRadar0(chartItem: CanvasRenderingContext2D | HTMLCanvasElement, color: string): Chart {
+  console.log('drawRadar0');
   const data = {
     labels: ['要件・基本設計', '詳細設計', 'コーディング', '試験', '運用保守'],
     datasets: [

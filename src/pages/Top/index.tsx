@@ -19,7 +19,7 @@ const Top: FC = () => {
   const navigate = useNavigate()
   const userContext = React.useContext(UserContext)
   console.log('top page: ', userContext.user.basic.name)
-  const [selfImg, setSelfImg] = useState(male)
+  // const [selfImg, setSelfImg] = useState(userContext.user.basic.sex === 0 ? male : female)
   const [selfRadarChartColor, setSelfRadarChartColor] = useState<string>(
     hex2rgb(getStyleFromCSSClass('canvas-panel', 'color'))
   )
@@ -62,11 +62,7 @@ const Top: FC = () => {
   }
 
   const handleTimeLineClick = () => {
-    userContext.user.basic.name = 'aaa'
-    // const user = {...userContext.user}
-    // user.basic.name = 'bbb'
-    // userContext.setUser(user)
-    // navigate('/timeLine')
+    navigate('/timeLine')
   }
 
   const changePrimaryColor = () => {
@@ -74,7 +70,7 @@ const Top: FC = () => {
     const mergedNextColor = {
       // primaryColor: '#f759ab',
       // primaryColor: '#7cb305',
-      primaryColor: '#ff0000',
+      primaryColor: userContext.user.basic.color,
     }
     ConfigProvider.config({
       theme: mergedNextColor,
@@ -83,8 +79,16 @@ const Top: FC = () => {
 
   const handleClick = () => {
     changePrimaryColor()
-    setSelfImg(female)
+    // setSelfImg(female)
     setSelfRadarChartColor(hex2rgb(getStyleFromCSSClass('canvas-panel', 'color')))
+  }
+
+  const generalListHtml = (infoList: string[]) => {
+    let t = ''
+    infoList.forEach((item) => {
+      t += `<li>${item}</li>`
+    })
+    return { __html: t }
   }
 
   return (
@@ -92,51 +96,34 @@ const Top: FC = () => {
       <Header type={HEADER_TYPE.TOP} title='' actionFuncs={[]} />
 
       <div>
-        <img src={selfImg} alt='Logo' className='selfy-logo' />
+        <img src={userContext.user.basic.photo} alt='Logo' className='selfy-logo' />
       </div>
 
       <section className='section'>
         <h1>{userContext.user.basic.name}</h1>
-        <h1>郭　維</h1>
-        <h5>ITシステムエンジニア</h5>
+        <h5>{userContext.user.basic.job_category}</h5>
         <Divider />
-        <div className='content'>
-          中国大連出身、東京都在住。
-          <br />
-          大学でIT関連知識を学び、卒業後は日本向けのIT企業に入職、フロントエンド・バックエンドエンジニアとしてソフトウェアの開発・運用に携わる。２０１９年からReactを中心にフロントエンドの開発に従事。
-        </div>
+        <div className='content'>{userContext.user.basic.personal_info}</div>
         <Divider />
 
         <h2>自己PR</h2>
-        <div className='content'>
-          ほぼ20年の開発経験があり、フロントエンド、バックエンドともに経験を持っていて
-          <br />
-          今までの経験を活かしながらさらに最新のテクニックを勉強してお客様のニーズを理解した上に役立つ提案をできるよう頑張っています！
-        </div>
+        <div className='content'>{userContext.user.pr}</div>
         <Divider />
 
         <h2>価値観</h2>
         <div className='content'>
-          <ul>
-            <li>機械ではなく人のように能動性を持って自発的に仕事できる</li>
-            <li>コミュニケーションを重視し、協調しながら変化があっても対応できる</li>
-            <li>動くソフトウェアを重視、美しさと使いやすさを重視するソースコードを求める</li>
-          </ul>
+          <ul dangerouslySetInnerHTML={generalListHtml(userContext.user.personal_value_list)} />
         </div>
         <Divider />
 
-        <h2>プログラミングが好きな理由</h2>
+        <h2>{userContext.user.customize_info.title}</h2>
         <div className='content'>
-          <ul>
-            <li>ソフトウェアは世界を繋がるものである</li>
-            <li>創作性がある仕事である</li>
-            <li>パートナがたくさんいる</li>
-          </ul>
+          <ul dangerouslySetInnerHTML={generalListHtml(userContext.user.customize_info.info_list)} />
         </div>
         <Divider />
         <h2>私には何ができますか</h2>
         <div className='canvas-panel'>
-          <canvas id='experienceChart' className='aaaaaaa' />
+          <canvas id='experienceChart' />
           <div>
             <Radio.Group
               value={radarType}

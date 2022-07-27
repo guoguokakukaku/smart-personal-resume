@@ -3,6 +3,7 @@ import Top from '../pages/Top'
 import TimeLine from '../pages/TimeLine'
 import Project from '../pages/Project'
 import Loading from '../pages/Loading'
+import Error from '../pages/Error'
 import React, { useState } from 'react'
 import { UserContext, useUserContext } from '../hooks/UserContext'
 
@@ -16,6 +17,7 @@ export default function Router() {
           <Route path='/top' element={<Top />}></Route>
           <Route path='/project' element={<Project />}></Route>
           <Route path='/timeline' element={<TimeLine />}></Route>
+          <Route path='/error' element={<Error />}></Route>
           <Route path='*' element={<Loading />}></Route>
         </Routes>
       </BrowserRouter>
