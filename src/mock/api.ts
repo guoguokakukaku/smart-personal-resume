@@ -2,6 +2,7 @@ import GuoWei from './resume/guowei/guowei.json'
 import User from '../hooks/User'
 import { createEmptyUser } from '../hooks/UserContext'
 import { info } from 'console'
+import { getGuoweiResumeData } from './UserData'
 
 // export const getInfo = async (): Promise<string> => {
 //   return new Promise((resolve, reject) => {
@@ -14,7 +15,7 @@ import { info } from 'console'
 export const fetchUserInfoFromJsonFile = async (userName: string): Promise<User> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const Data = GuoWei;
+      const Data = getGuoweiResumeData();
       const user: User = createEmptyUser()
       // basic 基本情報
       user.basic.color = Data.basic.color

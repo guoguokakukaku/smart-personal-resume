@@ -1,3 +1,5 @@
+import { Project } from './Project'
+
 export default interface User  {
   basic: {
     color: string
@@ -17,14 +19,5 @@ export default interface User  {
     title: string
     info_list: string[]
   }
-  timeline_list: {
-    start_time: string
-    end_time: string
-    project_name: string
-    dev_tool_list: number[]
-    process_list: number[]
-    description: string
-    detail_list: string[]
-    image_list: string[]
-  }[]
+  timeline_list: Project[]
 }

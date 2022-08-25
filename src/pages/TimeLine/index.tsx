@@ -6,6 +6,7 @@ import ProjectSummary from '../../components/ProjectSummary'
 import Header from '../../components/Header'
 import { HEADER_TYPE } from '../../util/common'
 import { UserContext } from '../../hooks/UserContext'
+import { getProjectList } from '../../util/projects'
 
 const { Search } = Input
 
@@ -19,6 +20,7 @@ const TimeLine: FC = () => {
     if (!userContext.user.basic.name) {
       navigate('/loading')
     }
+    console.log('★' + getProjectList('guowei').length)
     window.scrollTo(0, 0)
   })
 
