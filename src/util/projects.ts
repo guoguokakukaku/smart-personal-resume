@@ -3,7 +3,7 @@ import { Project } from '../hooks/Project'
 
 export function getProjectList(name: string): Project[] {
   let result: Project[] = []
-  if (name === 'guowei456') {
+  if (name === 'guowei') {
     const data = getGuoweiResumeData()
     result = data.timeline_list
   }
