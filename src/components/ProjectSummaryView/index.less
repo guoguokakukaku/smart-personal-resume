@@ -18,24 +18,26 @@
     flex-direction: row;
     justify-content: flex-start;
     margin: 4px 0;
+    flex-wrap: wrap;
     .sub-title {
       font-weight: 500;
     }
     .dev-env-item,
     .process-item,
-    .process-item-enable {
-      background-color: var(--ant-primary-2);
+    .process-item-disable {
+      background-color: var(--ant-primary-1);
       border-radius: 2px;
       font-weight: 600;
       font-size: @font-small1;
       color: var(--ant-primary-7);
       padding: 4px 8px;
-      margin: 0px 2px;
+      margin: 2px 2px;
+      min-width: fit-content;
     }
     .dev-env-item-match {
       background-color: yellow;
     }
-    .process-item-enable {
+    .process-item-disable {
       background-color: rgba(93, 87, 107, 0.1);
       color: gray;
     }

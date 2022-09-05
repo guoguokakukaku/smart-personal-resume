@@ -9,7 +9,7 @@ export function hex2rgb(hex: string) {
 }
 
 export function getStyleFromCSSClass(className: string, keyName: string): string {
-  const tmp = document.createElement('div')
+  const tmp = document.createElement('div') 
   tmp.style.cssText = 'position:fixed;width:0;height:0'
   tmp.className = className
   document.body.appendChild(tmp)

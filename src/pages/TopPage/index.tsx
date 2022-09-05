@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Radio } from 'antd'
+import { Radio, Button } from 'antd'
 import './index.less'
 import male from '../../assets/male.png'
 import female from '../../assets/female.png'
@@ -8,14 +8,14 @@ import { drawBar, drawRadar0, drawRadar1 } from '../../util/drawCharts'
 import Chart from 'chart.js/auto'
 import { hex2rgb, getStyleFromCSSClass } from '../../util/common'
 import { useNavigate } from 'react-router-dom'
-import Header from '../../components/Header'
+import Header from '../../components/HeaderView'
 import { HEADER_TYPE } from '../../util/common'
 import { UserContext } from '../../hooks/UserContext'
 
 let experienceChart: Chart | undefined = undefined
 let skillChart: Chart | undefined = undefined
 
-const Top: FC = () => {
+const TopPage: FC = () => {
   const navigate = useNavigate()
   const userContext = React.useContext(UserContext)
   console.log('top page: ', userContext.user.basic.name)
@@ -65,12 +65,12 @@ const Top: FC = () => {
     navigate('/timeLine')
   }
 
-  const changePrimaryColor = () => {
+  const changePrimaryColor = (primaryColor: undefined | string) => {
     // メインカラーを変更する
     const mergedNextColor = {
       // primaryColor: '#f759ab',
       // primaryColor: '#7cb305',
-      primaryColor: userContext.user.basic.color,
+      primaryColor: primaryColor? primaryColor : userContext.user.basic.color,
     }
     ConfigProvider.config({
       theme: mergedNextColor,
@@ -78,7 +78,7 @@ const Top: FC = () => {
   }
 
   const handleClick = () => {
-    changePrimaryColor()
+    changePrimaryColor('#00FF00')
     // setSelfImg(female)
     setSelfRadarChartColor(hex2rgb(getStyleFromCSSClass('canvas-panel', 'color')))
   }
@@ -103,19 +103,16 @@ const Top: FC = () => {
         <h1>{userContext.user.basic.name}</h1>
         <h5>{userContext.user.basic.job_category}</h5>
         <Divider />
-        <div className='content'>{userContext.user.basic.personal_info}</div>
+        <div className='content' dangerouslySetInnerHTML={{ __html: userContext.user.basic.personal_info }} />
         <Divider />
-
         <h2>自己PR</h2>
-        <div className='content'>{userContext.user.pr}</div>
+        <div className='content' dangerouslySetInnerHTML={{ __html: userContext.user.pr }} />
         <Divider />
-
         <h2>価値観</h2>
         <div className='content'>
           <ul dangerouslySetInnerHTML={generalListHtml(userContext.user.personal_value_list)} />
         </div>
         <Divider />
-
         <h2>{userContext.user.customize_info.title}</h2>
         <div className='content'>
           <ul dangerouslySetInnerHTML={generalListHtml(userContext.user.customize_info.info_list)} />
@@ -141,12 +138,10 @@ const Top: FC = () => {
         <div className='canvas-panel'>
           <canvas id='skillChart' height={300} />
         </div>
-
         <Divider />
-        {/* <Button type='primary' onClick={handleClick}>
-          aaa
-        </Button> */}
-
+        <Button type='primary' onClick={handleClick}>
+          change theme
+        </Button>
         <div className='footer'>
           <div className='common-button' onClick={() => handleTimeLineClick()}>
             開発履歴はこちら
@@ -157,4 +152,4 @@ const Top: FC = () => {
   )
 }
 
-export default Top
+export default TopPage

@@ -3,8 +3,8 @@ export interface Project {
   start_time: string
   end_time: string
   project_name: string
-  dev_tool_list: number[]
-  process_list: number[]
+  dev_tool_list: string[]
+  process_list: string[]
   description: string
   detail_list: string[]
   image_list: string[]

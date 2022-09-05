@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { fetchUserInfoFromJsonFile } from '../../mock/api'
 import { ConfigProvider } from 'antd'
 
-const Loading: FC = () => {
+const LoadingPage: FC = () => {
   const navigate = useNavigate()
   const userContext = useContext(UserContext)
   console.log('loading page: ', userContext.user.basic.name)
@@ -14,7 +14,7 @@ const Loading: FC = () => {
       let urlParamStr = window.location.search
       // console.log('★', urlParamStr)
 
-      if (!urlParamStr) urlParamStr = 'u=guowei' // TODO default user
+      if (!urlParamStr) urlParamStr = 'u=guowei' // TODO 通常urlパラメータでユーザ識別しますが、ここでdefault userを設定されてしまう
       let user = ''
       if (urlParamStr) {
         //?を除去
@@ -71,7 +71,7 @@ const Loading: FC = () => {
   )
 }
 
-export default Loading
+export default LoadingPage
 
 // let urlParamStr = window.location.search
 // // console.log('★', urlParamStr)

@@ -36,7 +36,6 @@ export const fetchUserInfoFromJsonFile = async (userName: string): Promise<User>
 
       // 
 
-      console.log(user)
       resolve(user)
     }, 1000)
   })

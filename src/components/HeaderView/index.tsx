@@ -4,7 +4,7 @@ import './index.less'
 import { useNavigate } from 'react-router-dom'
 import { attachTypeApi } from 'antd/lib/message'
 import { BlockOutlined, MessageOutlined, TagOutlined, DesktopOutlined, AppstoreAddOutlined } from '@ant-design/icons'
-import ProjectSummary from '../ProjectSummary'
+import ProjectSummaryView from '../ProjectSummaryView'
 import react from '../../assets/react.png'
 import { LeftOutlined, SmileOutlined, ArrowLeftOutlined, WechatFilled, MailOutlined } from '@ant-design/icons'
 import { Timeline, Input } from 'antd'
@@ -17,11 +17,12 @@ const { Search } = Input
 interface Props {
   // 0: top画面, 1: timelin画面 2: 通常
   type: string
-  title: string
+  title?: string
   actionFuncs: Function[]
+  defaultValue?:  string
 }
 
-const Header: FC<Props> = (props) => {
+const HeaderView: FC<Props> = (props) => {
   return (
     <div className='header'>
       {props.type === HEADER_TYPE.TOP && (
@@ -46,7 +47,8 @@ const Header: FC<Props> = (props) => {
             className='search-button'
             placeholder='input search text'
             size='large'
-            onSearch={() => props.actionFuncs[1]()}
+            onSearch={(value: string) => props.actionFuncs[1](value)}
+            defaultValue={props.defaultValue}
             enterButton
           />
         </Fragment>
@@ -62,4 +64,4 @@ const Header: FC<Props> = (props) => {
   )
 }
 
-export default Header
+export default HeaderView
