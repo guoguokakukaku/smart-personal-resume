@@ -14,11 +14,34 @@ export function createEmptyUser(): User {
       personal_info: '',
       photo: '',
     },
+    pr_title: '',
     pr: '',
+    personal_value_title: '',
     personal_value_list: [],
     customize_info: {
       title: '',
       info_list: [],
+    },
+    what_can_i_do_title: '',
+    what_can_i_do: [
+      {
+        label: '',
+        labels: ['', '', '', '', ''],
+        data: [0, 0, 0, 0, 0],
+        button_text: '',
+      },
+      {
+        label: '',
+        labels: ['', '', '', '', ''],
+        data: [0, 0, 0, 0, 0],
+        button_text: '',
+      },
+    ],
+    skill_point_title: '',
+    skill_point: {
+      label: '',
+      labels: ['', '', '', '', ''],
+      data: [0, 0, 0, 0, 0],
     },
     timeline_list: [],
   }

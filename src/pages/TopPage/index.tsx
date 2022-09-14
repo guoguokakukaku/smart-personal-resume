@@ -1,10 +1,8 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Radio, Button } from 'antd'
 import './index.less'
-import male from '../../assets/male.png'
-import female from '../../assets/female.png'
 import { ConfigProvider, Divider } from 'antd'
-import { drawBar, drawRadar0, drawRadar1 } from '../../util/drawCharts'
+import { drawBar, drawRadar0 } from '../../util/drawCharts'
 import Chart from 'chart.js/auto'
 import { hex2rgb, getStyleFromCSSClass } from '../../util/common'
 import { useNavigate } from 'react-router-dom'
@@ -19,11 +17,10 @@ const TopPage: FC = () => {
   const navigate = useNavigate()
   const userContext = React.useContext(UserContext)
   console.log('top page: ', userContext.user.basic.name)
-  // const [selfImg, setSelfImg] = useState(userContext.user.basic.sex === 0 ? male : female)
   const [selfRadarChartColor, setSelfRadarChartColor] = useState<string>(
     hex2rgb(getStyleFromCSSClass('canvas-panel', 'color'))
   )
-  const [radarType, setRadarType] = useState<string>('0')
+  const [radarType, setRadarType] = useState('0')
 
   useEffect(() => {
     if (!userContext.user.basic.name) {
@@ -32,26 +29,41 @@ const TopPage: FC = () => {
   })
 
   useEffect(() => {
+    if (!userContext.user.what_can_i_do_title) return
     const ctx = document.getElementById('experienceChart') as HTMLCanvasElement
     if (experienceChart !== undefined) {
       experienceChart.destroy()
       experienceChart = undefined
     }
-    if (radarType === '0') {
-      experienceChart = drawRadar0(ctx, selfRadarChartColor)
-    } else {
-      experienceChart = drawRadar1(ctx, selfRadarChartColor)
-    }
-  }, [selfRadarChartColor, radarType])
+
+    experienceChart = drawRadar0(
+      ctx,
+      selfRadarChartColor,
+      userContext.user.what_can_i_do[Number(radarType)].label,
+      userContext.user.what_can_i_do[Number(radarType)].labels,
+      userContext.user.what_can_i_do[Number(radarType)].data
+    )
+  }, [selfRadarChartColor, radarType, userContext.user.what_can_i_do, userContext.user.what_can_i_do_title])
 
   useEffect(() => {
     const ctx = document.getElementById('skillChart') as HTMLCanvasElement
+    if (!userContext.user.skill_point_title) return
     if (skillChart !== undefined) {
       skillChart.destroy()
       skillChart = undefined
     }
-    skillChart = drawBar(ctx)
-  }, [])
+    skillChart = drawBar(
+      ctx,
+      userContext.user.skill_point.label,
+      userContext.user.skill_point.labels,
+      userContext.user.skill_point.data
+    )
+  }, [
+    userContext.user.skill_point.data,
+    userContext.user.skill_point.label,
+    userContext.user.skill_point.labels,
+    userContext.user.skill_point_title,
+  ])
 
   const handleChangeExperienceChart = (type: string) => {
     if (type === '0') {
@@ -70,7 +82,7 @@ const TopPage: FC = () => {
     const mergedNextColor = {
       // primaryColor: '#f759ab',
       // primaryColor: '#7cb305',
-      primaryColor: primaryColor? primaryColor : userContext.user.basic.color,
+      primaryColor: primaryColor ? primaryColor : userContext.user.basic.color,
     }
     ConfigProvider.config({
       theme: mergedNextColor,
@@ -91,6 +103,7 @@ const TopPage: FC = () => {
     return { __html: t }
   }
 
+  console.log('Top page render...')
   return (
     <div className='page top'>
       <Header type={HEADER_TYPE.TOP} title='' actionFuncs={[]} />
@@ -105,10 +118,10 @@ const TopPage: FC = () => {
         <Divider />
         <div className='content' dangerouslySetInnerHTML={{ __html: userContext.user.basic.personal_info }} />
         <Divider />
-        <h2>自己PR</h2>
+        <h2>{userContext.user.pr_title}</h2>
         <div className='content' dangerouslySetInnerHTML={{ __html: userContext.user.pr }} />
         <Divider />
-        <h2>価値観</h2>
+        <h2>{userContext.user.personal_value_title}</h2>
         <div className='content'>
           <ul dangerouslySetInnerHTML={generalListHtml(userContext.user.personal_value_list)} />
         </div>
@@ -117,36 +130,48 @@ const TopPage: FC = () => {
         <div className='content'>
           <ul dangerouslySetInnerHTML={generalListHtml(userContext.user.customize_info.info_list)} />
         </div>
-        <Divider />
-        <h2>私には何ができますか</h2>
-        <div className='canvas-panel'>
-          <canvas id='experienceChart' />
-          <div>
-            <Radio.Group
-              value={radarType}
-              onChange={(e) => handleChangeExperienceChart(e.target.value)}
-              optionType='button'
-              buttonStyle='solid'
-            >
-              <Radio.Button value='0'>担当工程</Radio.Button>
-              <Radio.Button value='1'>業務経験</Radio.Button>
-            </Radio.Group>
-          </div>
-        </div>
-        <Divider />
-        <h2>スキル情報</h2>
-        <div className='canvas-panel'>
-          <canvas id='skillChart' height={300} />
-        </div>
-        <Divider />
-        <Button type='primary' onClick={handleClick}>
-          change theme
-        </Button>
-        <div className='footer'>
-          <div className='common-button' onClick={() => handleTimeLineClick()}>
-            開発履歴はこちら
-          </div>
-        </div>
+        {userContext.user.what_can_i_do_title && (
+          <>
+            <Divider />
+            <h2>{userContext.user.what_can_i_do_title}</h2>
+            <div className='canvas-panel'>
+              <canvas id='experienceChart' />
+              <div>
+                <Radio.Group
+                  value={radarType}
+                  onChange={(e) => handleChangeExperienceChart(e.target.value)}
+                  optionType='button'
+                  buttonStyle='solid'
+                >
+                  <Radio.Button value='0'>{userContext.user.what_can_i_do[0].button_text}</Radio.Button>
+                  {userContext.user.what_can_i_do.length > 1 && (
+                    <>
+                      <Radio.Button value='1'>{userContext.user.what_can_i_do[1].button_text}</Radio.Button>
+                    </>
+                  )}
+                </Radio.Group>
+              </div>
+            </div>
+          </>
+        )}
+        {userContext.user.skill_point_title && (
+          <>
+            <Divider />
+            <h2>{userContext.user.skill_point_title}</h2>
+            <div className='canvas-panel'>
+              <canvas id='skillChart' height={300} />
+            </div>
+            <Divider />
+            <Button type='primary' onClick={handleClick}>
+              change theme
+            </Button>
+            <div className='footer'>
+              <div className='common-button' onClick={() => handleTimeLineClick()}>
+                開発履歴はこちら
+              </div>
+            </div>
+          </>
+        )}
       </section>
     </div>
   )

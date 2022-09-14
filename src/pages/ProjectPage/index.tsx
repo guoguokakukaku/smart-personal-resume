@@ -34,6 +34,7 @@ const ProjectPage: FC = () => {
     navigate('/timeline', { state: { searchValue: searchValue } })
   }
 
+  console.log('project page render...')
   return (
     <div className='page project'>
       <Header type={HEADER_TYPE.COMMON} title='案件詳細' actionFuncs={[handleNavBack]} />

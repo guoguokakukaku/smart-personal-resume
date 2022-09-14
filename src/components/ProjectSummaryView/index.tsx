@@ -9,10 +9,36 @@ import { isEnableProcess } from '../../util/projects'
 
 interface Props {
   project: Project
-  searchValue: undefined | string
+  searchValue: string
 }
 
 const ProjectSummaryView: FC<Props> = (props) => {
+  const getHighlightDevItem = (dev_item: string) => {
+    if (props.searchValue === undefined || props.searchValue === null || props.searchValue === '') {
+      return <>{dev_item}</>
+    }
+
+    const searchValueRegExp = new RegExp(props.searchValue, 'i')
+    const result = dev_item.match(searchValueRegExp)
+    let part1
+    let part2
+    let part3
+    if (result !== undefined && result !== null && result.index !== undefined) {
+      part1 = dev_item.substring(0, result?.index)
+      part2 = dev_item.substring(result?.index, result?.index + props.searchValue.length)
+      part3 = dev_item.substring(result?.index + props.searchValue.length)
+      return (
+        <>
+          {part1}
+          <span className='dev-env-item-match'>{part2}</span>
+          {part3}
+        </>
+      )
+    } else {
+      return <>{dev_item}</>
+    }
+  }
+
   return (
     <div className='project-summary'>
       <div className='period'>
@@ -27,9 +53,11 @@ const ProjectSummaryView: FC<Props> = (props) => {
         </div>
         <div className='project-flex-row'>
           {props.project.dev_tool_list.map((dev_item) => {
-            let content =
-              dev_item === props.searchValue ? <span className='dev-env-item-match'>{dev_item}</span> : dev_item
-            return <div key={dev_item} className='dev-env-item'>{content}</div>
+            return (
+              <div key={dev_item} className='dev-env-item'>
+                {getHighlightDevItem(dev_item)}
+              </div>
+            )
           })}
         </div>
       </div>
