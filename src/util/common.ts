@@ -17,3 +17,12 @@ export function getStyleFromCSSClass(className: string, keyName: string): string
   document.body.removeChild(tmp)
   return value
 }
+
+export const DEV_PROCESS = {
+  REQUIREMENTS_DEFINITION: "要件定義",
+  BASIC_DESIGN: "基本設計",
+  DETAILED_DESIGN: "詳細設計",
+  CODING: "実装",
+  TEST: "試験",
+  MENTINATION: "運用"
+}

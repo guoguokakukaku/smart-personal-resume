@@ -1,11 +1,10 @@
-import React, { FC, useEffect } from 'react'
-import { ConfigProvider, Button, Divider } from 'antd'
+import { FC } from 'react'
+import { Divider } from 'antd'
 import './index.less'
-import { useNavigate } from 'react-router-dom'
-import { attachTypeApi } from 'antd/lib/message'
-import { Project } from '../../hooks/Project'
-import { SmileOutlined, TeamOutlined, TagOutlined, DesktopOutlined, AppstoreAddOutlined } from '@ant-design/icons'
+import { Project } from '../../model/Project'
+import { TagOutlined, DesktopOutlined } from '@ant-design/icons'
 import { isEnableProcess } from '../../util/projects'
+import { DEV_PROCESS } from '../../util/common'
 
 interface Props {
   project: Project
@@ -70,39 +69,53 @@ const ProjectSummaryView: FC<Props> = (props) => {
         <div className='project-flex-row'>
           <div
             className={
-              isEnableProcess(props.project.process_list, '要件定義') ? 'process-item' : 'process-item-disable'
+              isEnableProcess(props.project.process_list, DEV_PROCESS.REQUIREMENTS_DEFINITION)
+                ? 'process-item'
+                : 'process-item-disable'
             }
           >
-            要件定義
+            {DEV_PROCESS.REQUIREMENTS_DEFINITION}
           </div>
           <div
             className={
-              isEnableProcess(props.project.process_list, '基本設計') ? 'process-item' : 'process-item-disable'
+              isEnableProcess(props.project.process_list, DEV_PROCESS.BASIC_DESIGN)
+                ? 'process-item'
+                : 'process-item-disable'
             }
           >
-            基本設計
+            {DEV_PROCESS.BASIC_DESIGN}
           </div>
           <div
             className={
-              isEnableProcess(props.project.process_list, '詳細設計') ? 'process-item' : 'process-item-disable'
+              isEnableProcess(props.project.process_list, DEV_PROCESS.DETAILED_DESIGN)
+                ? 'process-item'
+                : 'process-item-disable'
             }
           >
-            詳細設計
+            {DEV_PROCESS.DETAILED_DESIGN}
           </div>
           <div
-            className={isEnableProcess(props.project.process_list, '実装') ? 'process-item' : 'process-item-disable'}
+            className={
+              isEnableProcess(props.project.process_list, DEV_PROCESS.CODING) ? 'process-item' : 'process-item-disable'
+            }
           >
-            実装
+            {DEV_PROCESS.CODING}
           </div>
           <div
-            className={isEnableProcess(props.project.process_list, '試験') ? 'process-item' : 'process-item-disable'}
+            className={
+              isEnableProcess(props.project.process_list, DEV_PROCESS.TEST) ? 'process-item' : 'process-item-disable'
+            }
           >
-            試験
+            {DEV_PROCESS.TEST}
           </div>
           <div
-            className={isEnableProcess(props.project.process_list, '運用') ? 'process-item' : 'process-item-disable'}
+            className={
+              isEnableProcess(props.project.process_list, DEV_PROCESS.MENTINATION)
+                ? 'process-item'
+                : 'process-item-disable'
+            }
           >
-            運用
+            {DEV_PROCESS.MENTINATION}
           </div>
         </div>
       </div>

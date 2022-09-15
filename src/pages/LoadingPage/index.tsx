@@ -6,15 +6,15 @@ import { ConfigProvider } from 'antd'
 
 const LoadingPage: FC = () => {
   const navigate = useNavigate()
+  // 因为已经在router里边进行了初始化，所以这里得到的userContext的值就是useUserContext，里边包含一个user，还有一个设置user的方法。
   const userContext = useContext(UserContext)
   console.log('loading page: ', userContext.user.basic.name)
 
   useEffect(() => {
     if (!userContext.user.basic.name) {
       let urlParamStr = window.location.search
-      // console.log('★', urlParamStr)
-
-      if (!urlParamStr) urlParamStr = 'u=guowei' // TODO 通常urlパラメータでユーザ識別しますが、ここでdefault userを設定されてしまう
+      // TODO 通常urlパラメータでユーザ識別しますが、ここでdefault userを設定されてしまう
+      if (!urlParamStr) urlParamStr = 'u=guowei' 
       let user = ''
       if (urlParamStr) {
         //?を除去

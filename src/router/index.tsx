@@ -4,10 +4,10 @@ import TimelinePage from '../pages/TimelinePage'
 import ProjectPage from '../pages/ProjectPage'
 import LoadingPage from '../pages/LoadingPage'
 import Error from '../pages/ErrorPage'
-import React, { useState } from 'react'
 import { UserContext, useUserContext } from '../hooks/UserContext'
 
 export default function Router() {
+  // 这里的user是一个自定义hook，组件树中取得userContext，并可以调用setUser方法更新
   const user = useUserContext()
 
   return (

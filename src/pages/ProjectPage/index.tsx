@@ -5,7 +5,7 @@ import ProjectDetailView from '../../components/ProjectDetailView'
 import Header from '../../components/HeaderView'
 import { HEADER_TYPE } from '../../util/common'
 import { UserContext } from '../../hooks/UserContext'
-import { Project } from '../../hooks/Project'
+import { Project } from '../../model/Project'
 
 type State = {
   project: Project

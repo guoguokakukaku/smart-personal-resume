@@ -1,13 +1,9 @@
-import React, { FC, useEffect } from 'react'
-import { ConfigProvider, Button, Divider, Image } from 'antd'
+import { FC } from 'react'
+import {  Divider, Image } from 'antd'
 import './index.less'
-import { useLocation } from 'react-router-dom'
-import { attachTypeApi } from 'antd/lib/message'
-import { BlockOutlined, MessageOutlined, TagOutlined, DesktopOutlined, AppstoreAddOutlined } from '@ant-design/icons'
+import { BlockOutlined, MessageOutlined, AppstoreAddOutlined } from '@ant-design/icons'
 import ProjectSummaryView from '../ProjectSummaryView'
-import react from '../../assets/react.png'
-import { Project } from '../../hooks/Project'
-import { isEnableProcess } from '../../util/projects'
+import { Project } from '../../model/Project'
 
 interface Props {
   project: Project,

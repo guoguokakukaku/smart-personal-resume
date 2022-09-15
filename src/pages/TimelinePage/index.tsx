@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import ProjectSummaryView from '../../components/ProjectSummaryView'
 import Header from '../../components/HeaderView'
 import { HEADER_TYPE } from '../../util/common'
-import { Project } from '../../hooks/Project'
+import { Project } from '../../model/Project'
 import { UserContext } from '../../hooks/UserContext'
 
 type State = {

@@ -1,6 +1,11 @@
 import Chart from 'chart.js/auto'
 
-export function drawBar(chartItem: CanvasRenderingContext2D | HTMLCanvasElement, label: string, labels: string[], value: number[]): Chart {
+export function drawBar(
+  chartItem: CanvasRenderingContext2D | HTMLCanvasElement,
+  label: string,
+  labels: string[],
+  value: number[]
+): Chart {
   return new Chart(chartItem, {
     type: 'bar',
     data: {
@@ -39,7 +44,13 @@ export function drawBar(chartItem: CanvasRenderingContext2D | HTMLCanvasElement,
   })
 }
 
-export function drawRadar0(chartItem: CanvasRenderingContext2D | HTMLCanvasElement, color: string, label: string, labels: string[], value: number[]): Chart {
+export function drawRadar0(
+  chartItem: CanvasRenderingContext2D | HTMLCanvasElement,
+  color: string,
+  label: string,
+  labels: string[],
+  value: number[]
+): Chart {
   const data = {
     labels: labels,
     datasets: [
@@ -53,7 +64,7 @@ export function drawRadar0(chartItem: CanvasRenderingContext2D | HTMLCanvasEleme
         pointBorderColor: color,
         pointHoverBackgroundColor: color,
         pointHoverBorderColor: color,
-      }
+      },
     ],
   }
   return new Chart(chartItem, {
@@ -68,33 +79,3 @@ export function drawRadar0(chartItem: CanvasRenderingContext2D | HTMLCanvasEleme
     },
   })
 }
-
-// export function drawRadar1(chartItem: CanvasRenderingContext2D | HTMLCanvasElement, color: string, label: string, labels: string[], value: number[]): Chart {
-//   const data = {
-//     labels: ['Web情報管理システム', '車載機(Android)', '交　通', 'Androidアプリ', '認証サービス(SAAS)'],
-//     datasets: [
-//       {
-//         label: '熟練度参考値',
-//         data: [80, 50, 50, 60, 75],
-//         fill: true,
-//         backgroundColor: color,
-//         borderColor: color,
-//         pointBackgroundColor: color,
-//         pointBorderColor: color,
-//         pointHoverBackgroundColor: color,
-//         pointHoverBorderColor: color,
-//       }
-//     ],
-//   }
-//   return new Chart(chartItem, {
-//     type: 'radar',
-//     data: data,
-//     options: {
-//       elements: {
-//         line: {
-//           borderWidth: 3,
-//         },
-//       },
-//     },
-//   })
-// }

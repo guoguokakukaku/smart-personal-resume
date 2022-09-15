@@ -1,5 +1,5 @@
 import React from 'react'
-import User from './User'
+import User from '../model/User'
 
 export function createEmptyUser(): User {
   const emptyUser: User = {
@@ -71,7 +71,7 @@ export function useUserContext(): UserContextInterface {
 }
 
 /**
- * 使创建的userContext里边有两个成员，
+ * 使创建的UserContext里边有两个成员，
  * 一个是user，一个是用来更新user的函数
  */
 export const UserContext = React.createContext<UserContextInterface>({

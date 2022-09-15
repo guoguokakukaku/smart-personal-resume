@@ -1,13 +1,7 @@
-import React, { FC, useEffect, Fragment } from 'react'
-import { ConfigProvider, Button, Divider, Image } from 'antd'
+import React, { FC, Fragment } from 'react'
 import './index.less'
-import { useNavigate } from 'react-router-dom'
-import { attachTypeApi } from 'antd/lib/message'
-import { BlockOutlined, MessageOutlined, TagOutlined, DesktopOutlined, AppstoreAddOutlined } from '@ant-design/icons'
-import ProjectSummaryView from '../ProjectSummaryView'
-import react from '../../assets/react.png'
-import { LeftOutlined, SmileOutlined, ArrowLeftOutlined, WechatFilled, MailOutlined } from '@ant-design/icons'
-import { Timeline, Input } from 'antd'
+import { ArrowLeftOutlined } from '@ant-design/icons'
+import { Input } from 'antd'
 import { HEADER_TYPE } from '../../util/common'
 import LINELogo from '../../assets/LINE_logo.svg';
 import GmailLogo from '../../assets/Gmail_logo.svg';
@@ -27,10 +21,6 @@ const HeaderView: FC<Props> = (props) => {
     <div className='header'>
       {props.type === HEADER_TYPE.TOP && (
         <Fragment>
-          {/* <Button type='primary'>English</Button>
-          <Button type='primary'>開発履歴</Button> */}
-          {/* <WechatFilled className='aaaaa'/>
-          <MailOutlined className='bbbbb' /> */}
           <a href='https://line.me/ti/p/_TadaLnNlm' target='_blank' rel='noreferrer'>
             <img src={LINELogo} alt='line'  className='aaaaa'/>
           </a>

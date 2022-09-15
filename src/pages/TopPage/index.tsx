@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Radio, Button } from 'antd'
+import { Radio } from 'antd'
 import './index.less'
 import { ConfigProvider, Divider } from 'antd'
 import { drawBar, drawRadar0 } from '../../util/drawCharts'
@@ -14,9 +14,9 @@ let experienceChart: Chart | undefined = undefined
 let skillChart: Chart | undefined = undefined
 
 const TopPage: FC = () => {
+  console.log('Top page render...')
   const navigate = useNavigate()
   const userContext = React.useContext(UserContext)
-  console.log('top page: ', userContext.user.basic.name)
   const [selfRadarChartColor, setSelfRadarChartColor] = useState<string>(
     hex2rgb(getStyleFromCSSClass('canvas-panel', 'color'))
   )
@@ -29,6 +29,7 @@ const TopPage: FC = () => {
   })
 
   useEffect(() => {
+    // 図表を描画する
     if (!userContext.user.what_can_i_do_title) return
     const ctx = document.getElementById('experienceChart') as HTMLCanvasElement
     if (experienceChart !== undefined) {
@@ -46,6 +47,7 @@ const TopPage: FC = () => {
   }, [selfRadarChartColor, radarType, userContext.user.what_can_i_do, userContext.user.what_can_i_do_title])
 
   useEffect(() => {
+    // 図表を描画する
     const ctx = document.getElementById('skillChart') as HTMLCanvasElement
     if (!userContext.user.skill_point_title) return
     if (skillChart !== undefined) {
@@ -66,11 +68,7 @@ const TopPage: FC = () => {
   ])
 
   const handleChangeExperienceChart = (type: string) => {
-    if (type === '0') {
-      setRadarType('0')
-    } else {
-      setRadarType('1')
-    }
+    setRadarType(type)
   }
 
   const handleTimeLineClick = () => {
@@ -89,6 +87,7 @@ const TopPage: FC = () => {
     })
   }
 
+  // theme変更メソッド
   const handleClick = () => {
     changePrimaryColor('#00FF00')
     // setSelfImg(female)
@@ -103,7 +102,6 @@ const TopPage: FC = () => {
     return { __html: t }
   }
 
-  console.log('Top page render...')
   return (
     <div className='page top'>
       <Header type={HEADER_TYPE.TOP} title='' actionFuncs={[]} />
@@ -162,9 +160,6 @@ const TopPage: FC = () => {
               <canvas id='skillChart' height={300} />
             </div>
             <Divider />
-            <Button type='primary' onClick={handleClick}>
-              change theme
-            </Button>
             <div className='footer'>
               <div className='common-button' onClick={() => handleTimeLineClick()}>
                 開発履歴はこちら

@@ -1,16 +1,6 @@
-import GuoWei from './resume/guowei/guowei.json'
-import User from '../hooks/User'
+import User from '../model/User'
 import { createEmptyUser } from '../hooks/UserContext'
-import { info } from 'console'
 import { getGuoweiResumeData } from './UserData'
-
-// export const getInfo = async (): Promise<string> => {
-//   return new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//       resolve(JSON.stringify(Data))
-//     }, 1000)
-//   })
-// }
 
 export const fetchUserInfoFromJsonFile = async (userName: string): Promise<User> => {
   return new Promise((resolve, reject) => {

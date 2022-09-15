@@ -68,7 +68,12 @@
   "skill_point": {
     "label": "スキル評価点（主観的）1",
     "labels": [
-      "Java", "JavaScript", "React", "TypeScript", "SQL", "Android"
+      "Java",
+      "JavaScript",
+      "React",
+      "TypeScript",
+      "SQL",
+      "Android"
     ],
     "data": [
       70,
@@ -199,6 +204,33 @@
       ],
       "image_list": [
         "1.png"
+      ]
+    },
+    {
+      "project_code": "guowei_201703",
+      "start_time": "201703",
+      "end_time": "201801",
+      "project_name": "自動車保険",
+      "dev_tool_list": [
+        "Java",
+        "SQL",
+        "HirDB",
+        "Eclipse",
+        "JSF",
+        "Hitachi Application Server(tomcat)"
+      ],
+      "process_list": [
+        "詳細設計",
+        "実装",
+        "試験"
+      ],
+      "description": "代理店向けの自動車保険システムである。<br />見積、申込、ペーパーレス化機能を中心に各サービスとの連携で見積から各照会機能まで、そして計上機能も搭載されている",
+      "detail_list": [
+        "不具合解析・試験を行う",
+        "リリース後の保守作業。"
+      ],
+      "image_list": [
+        "1.jpg"
       ]
     }
   ]
