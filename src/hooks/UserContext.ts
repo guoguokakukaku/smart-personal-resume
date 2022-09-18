@@ -1,8 +1,9 @@
 import React from 'react'
-import User from '../model/User'
+import User, { USER_TYPE } from '../model/User'
 
 export function createEmptyUser(): User {
   const emptyUser: User = {
+    type: USER_TYPE.LOCAL,
     basic: {
       color: '',
       name: '',

@@ -59,7 +59,7 @@ const TimelinePage: FC = () => {
     if (projectFilterList.length === 0) return <div>条件に一致する内容は見つかりません。</div>
 
     return projectFilterList.map((project) => (
-      <Timeline.Item color='red' key={project.project_code}>
+      <Timeline.Item color={project.end_time ? 'green': 'red'} key={project.project_code}>
         <ProjectSummaryView project={project} searchValue={searchValue} />
         <div className='common-button' onClick={() => handleShowProject(project, searchValue)}>
           案件詳細はこちら

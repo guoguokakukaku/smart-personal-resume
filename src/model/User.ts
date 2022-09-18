@@ -1,6 +1,12 @@
 import { Project } from './Project'
 
+export enum USER_TYPE {
+  LOCAL,
+  NETWORK
+}
+
 export default interface User {
+  type: USER_TYPE
   basic: {
     color: string
     name: string

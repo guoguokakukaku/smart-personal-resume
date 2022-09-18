@@ -35,7 +35,7 @@ const HeaderView: FC<Props> = (props) => {
           <ArrowLeftOutlined className='back-arrow' onClick={() => props.actionFuncs[0]()} />
           <Search
             className='search-button'
-            placeholder='input search text'
+            placeholder='技術キーワードを入力してください'
             size='large'
             onSearch={(value: string) => props.actionFuncs[1](value)}
             defaultValue={props.defaultValue}

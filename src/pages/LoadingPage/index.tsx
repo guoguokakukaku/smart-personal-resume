@@ -3,6 +3,7 @@ import { UserContext } from '../../hooks/UserContext'
 import { useNavigate } from 'react-router-dom'
 import { fetchUserInfoFromJsonFile } from '../../mock/api'
 import { ConfigProvider } from 'antd'
+import { USER_TYPE } from '../../model/User'
 
 const LoadingPage: FC = () => {
   const navigate = useNavigate()
@@ -11,25 +12,29 @@ const LoadingPage: FC = () => {
   console.log('loading page: ', userContext.user.basic.name)
 
   useEffect(() => {
+    console.log("LoadingPage: ", userContext.user.basic.name);
+    // ユーザが未取得の場合、取得を行う
     if (!userContext.user.basic.name) {
       let urlParamStr = window.location.search
       // TODO 通常urlパラメータでユーザ識別しますが、ここでdefault userを設定されてしまう
-      if (!urlParamStr) urlParamStr = 'u=guowei' 
-      let user = ''
+      if (!urlParamStr) urlParamStr = 'u=guowei'
+      let userName = ''
       if (urlParamStr) {
+        // urlにパラメータが存在する場合、ローカルユーザとして扱う
         //?を除去
         urlParamStr = urlParamStr.substring(1)
 
         //urlパラメータをオブジェクトにまとめる
         console.log(urlParamStr.split('&').length) // 必ず1
-        user = urlParamStr.split('&')[0].split('=')[1] // this is a sample: guowei
+        userName = urlParamStr.split('&')[0].split('=')[1] // this is a sample: guowei
 
-        if (user) {
+        if (userName) {
           const fetchData = async () => {
             console.log('getUserInfoFromJsonFile start')
-            const data = await fetchUserInfoFromJsonFile(user)
-            data.basic.photo = require(`../../mock/resume/${user}/self.png`)
+            const data = await fetchUserInfoFromJsonFile(userName)
+            data.basic.photo = require(`../../mock/resume/${userName}/self.png`)
             console.log('getUserInfoFromJsonFile end')
+            data.type = USER_TYPE.LOCAL
             userContext.setUser(data)
           }
           fetchData().catch(console.error)
@@ -37,6 +42,8 @@ const LoadingPage: FC = () => {
           navigate('/error')
         }
       } else {
+        // urlにパラメータが存在する場合、ネットユーザとして扱う（マイクロソフト認証を利用予定）
+        // TODO goto microsoft
         navigate('/error')
       }
     }
@@ -72,26 +79,3 @@ const LoadingPage: FC = () => {
 }
 
 export default LoadingPage
-
-// let urlParamStr = window.location.search
-// // console.log('★', urlParamStr)
-// let user = ""
-// if (urlParamStr) {
-//   //?を除去
-//   urlParamStr = urlParamStr.substring(1)
-
-//   //urlパラメータをオブジェクトにまとめる
-//   console.log(urlParamStr.split('&').length) // 必ず1
-//   user = urlParamStr.split('&')[0].split('=')[1]
-//   // urlParamStr.split('&').forEach((param) => {
-//   //   const temp = param.split('=')
-//   //   //pramsオブジェクトにパラメータを追加
-//   //   params = {
-//   //     ...params,
-//   //     [temp[0]]: temp[1],
-//   //   }
-//   // })
-// }
-// // console.log(user)
-
-// // React.createContext()

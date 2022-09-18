@@ -40,7 +40,7 @@ const ProjectPage: FC = () => {
       <Header type={HEADER_TYPE.COMMON} title='案件詳細' actionFuncs={[handleNavBack]} />
 
       <section className='section'>
-        <ProjectDetailView project={project} searchValue={searchValue} />
+        <ProjectDetailView project={project} searchValue={searchValue} userType={userContext.user.type} />
       </section>
     </div>
   )
