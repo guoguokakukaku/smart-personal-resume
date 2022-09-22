@@ -1,10 +1,12 @@
-import { FC } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import { Divider, Image } from 'antd'
 import './index.less'
 import { BlockOutlined, MessageOutlined, AppstoreAddOutlined } from '@ant-design/icons'
 import ProjectSummaryView from '../ProjectSummaryView'
 import { Project } from '../../model/Project'
 import { USER_TYPE } from '../../model/User'
+import { MsalResultContext } from '../../hooks/MsalResultContext'
+import { callMsGraph2OneDriveImgContentByItemId } from '../../msal/graph'
 
 interface Props {
   project: Project
@@ -13,8 +15,41 @@ interface Props {
 }
 
 const ProjectDetailView: FC<Props> = (props) => {
-  const projectImageListJSX = getProjectImageList(props.userType, props.project.image_list, props.project.project_code)
+  const msalResultContext = useContext(MsalResultContext)
+  const [status, setStatus] = useState('rending')
+  const [projectImageListJSX, setProjectImageListJSX] = useState(Array<JSX.Element>())
 
+  useEffect(() => {
+    if (props.userType === USER_TYPE.LOCAL) {
+      const jsxList = props.project.image_list.map((image) => {
+        return (
+          <Image
+            key={image}
+            className='img'
+            src={`${process.env.PUBLIC_URL}/project_images/${props.project.project_code}/${image}`}
+          />
+        )
+      })
+      setProjectImageListJSX(jsxList)
+      setStatus('loaded')
+    } else if (props.userType === USER_TYPE.NETWORK) {
+      const list = props.project.image_list.map((imageId) => {
+        return callMsGraph2OneDriveImgContentByItemId(msalResultContext.result.accessToken, imageId)
+      })
+      Promise.all(list).then((values) => {
+        const jsxList = values.map((i) => {
+          return <Image key={i} className='img' src={i} />
+        })
+        setProjectImageListJSX(jsxList)
+        setStatus('loaded')
+      })
+    }
+  }, [msalResultContext.result.accessToken, props.project.image_list, props.project.project_code, props.userType])
+
+  if (status === 'rending') {
+    return <div>rending...</div>
+  }
+  console.log('ProjectDetailView page rending.')
   return (
     <div className='project-detail'>
       <ProjectSummaryView project={props.project} searchValue={props.searchValue} />
@@ -46,20 +81,6 @@ const ProjectDetailView: FC<Props> = (props) => {
       <Divider className='divider' />
     </div>
   )
-}
-
-function getProjectImageList(userType: USER_TYPE, projectImageList: string[], projectCode: string) {
-  console.log('getProjects', userType)
-  if (userType === USER_TYPE.LOCAL) {
-    return projectImageList.map((image) => {
-      return (
-        <Image key={image} className='img' src={`${process.env.PUBLIC_URL}/project_images/${projectCode}/${image}`} />
-      )
-    })
-  }
-  if (userType === USER_TYPE.NETWORK) {
-    // TODO
-  }
 }
 
 export default ProjectDetailView

@@ -3,8 +3,9 @@ import './index.less'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
 import { HEADER_TYPE } from '../../util/common'
-import LINELogo from '../../assets/LINE_logo.svg';
-import GmailLogo from '../../assets/Gmail_logo.svg';
+import { SignOutButton } from '../../msal/components/SignOutButton'
+import { UserContext } from '../../hooks/UserContext'
+import { USER_TYPE } from '../../model/User'
 
 const { Search } = Input
 
@@ -13,20 +14,18 @@ interface Props {
   type: string
   title?: string
   actionFuncs: Function[]
-  defaultValue?:  string
+  defaultValue?: string
 }
 
 const HeaderView: FC<Props> = (props) => {
+  const userContext = React.useContext(UserContext)
+
   return (
     <div className='header'>
       {props.type === HEADER_TYPE.TOP && (
         <Fragment>
-          <a href='https://line.me/ti/p/_TadaLnNlm' target='_blank' rel='noreferrer'>
-            <img src={LINELogo} alt='line'  className='aaaaa'/>
-          </a>
-          <a href='mailto:guowei.dev@gmail.com'>
-            <img src={GmailLogo} alt='gmail' className='bbbbb'/>
-          </a>
+          <div className='title'>基本情報</div>
+          {userContext.user.type === USER_TYPE.NETWORK && <SignOutButton />}
         </Fragment>
       )}
 
