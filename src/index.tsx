@@ -1,10 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.less'
-import App from './App'
-import TopPage from './pages/TopPage'
 import Router from './router'
-import Timeline from './pages/TimelinePage'
 import reportWebVitals from './reportWebVitals'
 import { ConfigProvider } from 'antd'
 

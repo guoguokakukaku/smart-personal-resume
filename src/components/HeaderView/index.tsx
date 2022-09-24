@@ -24,7 +24,7 @@ const HeaderView: FC<Props> = (props) => {
     <div className='header'>
       {props.type === HEADER_TYPE.TOP && (
         <Fragment>
-          <div className='title'>基本情報</div>
+          <div className='title'>{props.title}</div>
           {userContext.user.type === USER_TYPE.NETWORK && <SignOutButton />}
         </Fragment>
       )}

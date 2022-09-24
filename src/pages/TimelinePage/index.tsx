@@ -13,6 +13,7 @@ type State = {
 }
 
 const TimelinePage: FC = () => {
+  console.log('timeline page render...')
   const navigate = useNavigate()
   const location = useLocation()
   const state = location.state as State
@@ -59,15 +60,16 @@ const TimelinePage: FC = () => {
     if (projectFilterList.length === 0) return <div>条件に一致する内容は見つかりません。</div>
 
     return projectFilterList.map((project) => (
-      <Timeline.Item color={project.end_time ? 'green': 'red'} key={project.project_code}>
-        <ProjectSummaryView project={project} searchValue={searchValue} />
-        <div className='common-button' onClick={() => handleShowProject(project, searchValue)}>
-          案件詳細はこちら
+      <Timeline.Item color={project.end_time ? 'green' : 'red'} key={project.project_code}>
+        <div className='project-container'>
+          <ProjectSummaryView project={project} searchValue={searchValue} />
+          <div className='common-button' onClick={() => handleShowProject(project, searchValue)}>
+            案件詳細はこちら
+          </div>
         </div>
       </Timeline.Item>
     ))
   }
-  console.log('timeline page render...')
   return (
     <div className='page timeline'>
       <Header type={HEADER_TYPE.SEARCH} defaultValue={searchValue} actionFuncs={[handleNavBack, handleSearch]} />

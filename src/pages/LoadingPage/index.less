@@ -1,12 +1,17 @@
-.asdf {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background: gainsboro;
-  align-items: center;
+@import '../../common.less';
+
+.loading {
   text-align: center;
-  display: flex;
-  flex-direction: column;
+  background-color: rgb(245, 245, 245);
+  min-height: 100vh;
+  .tos {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: rgb(0 0 0 / 13%) 0px 1.6px 3.6px 0px, rgb(0 0 0 / 11%) 0px 0.3px 0.9px 0px;
+    padding: 16px;
+    background-color: white;
+    margin: 16px;
+    text-align: left;
+    font-size: @font-large2;
+  }
 }
