@@ -17,6 +17,8 @@ import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/
 import User from '../../model/User'
 import { MsalResultContext, MsalResult } from '../../hooks/MsalResultContext'
 import './index.less'
+import Header from '../../components/HeaderView'
+import { HEADER_TYPE } from '../../util/common'
 
 const enum STATUS {
   RENDING,
@@ -26,6 +28,8 @@ const enum STATUS {
 }
 
 const LoadingPage: FC = () => {
+  console.log('Loading page render...')
+  console.log('Loading page render...' + process.env.REACT_AAA)
   const navigate = useNavigate()
   // 因为已经在router里边进行了初始化，所以这里得到的userContext的值就是useUserContext，里边包含一个user，还有一个设置user的方法。
   const userContext = useContext(UserContext)
@@ -194,9 +198,9 @@ const LoadingPage: FC = () => {
     }
   }, [navigate, userContext.user.basic.color, userContext.user.basic.name])
 
-  console.log('Loading page render...')
   return (
-    <div className='asdf'>
+    <div className='page loading'>
+      <Header type={HEADER_TYPE.TOP} title='次世代履歴書' actionFuncs={[]} />
       {status === STATUS.RENDING
         ? 'rending'
         : status === STATUS.COMMUNICATION
@@ -212,21 +216,22 @@ const LoadingPage: FC = () => {
         <>
           <AuthenticatedTemplate></AuthenticatedTemplate>
           <UnauthenticatedTemplate>
-            <h3>次世代履歴書</h3>
             <div>
-              <div>利用条件</div>
-              <ul>
-                <li>Microsoft アカウントを持っていること</li>
-                <li>
-                  Microsoft OneDriveに自己紹介用Jsonファイルの準備が完了したこと
-                  <br />
-                  （ファイル配置方法については
-                  <a href='./help.html' target='_blank'>
-                    こちら
-                  </a>
-                  ）
-                </li>
-              </ul>
+              <h1>利用条件</h1>
+              <div className='tos'>
+                <ul>
+                  <li>Microsoft アカウントを持っていること</li>
+                  <li>
+                    Microsoft OneDriveに自己紹介用Jsonファイルの準備が完了したこと
+                    <br />
+                    （ファイル配置方法については
+                    <a href='./help.html' target='_blank'>
+                      こちら
+                    </a>
+                    ）
+                  </li>
+                </ul>
+              </div>
             </div>
             <div>
               <SignInButton />

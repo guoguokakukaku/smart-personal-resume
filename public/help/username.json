@@ -1,0 +1,146 @@
+{
+  "basic": {
+    "color": "#00BFFF",
+    "name": "テスト太郎",
+    "sex": "0",
+    "birthdate": "19990101",
+    "station": "XXX",
+    "educational": "大学",
+    "job_category": "ITシステムエンジニア",
+    "personal_info": "xxxxxxxxxxxxxxx"
+  },
+  "pr_title": "yyyy",
+  "pr": "zzzz",
+  "personal_value_title": "xxx",
+  "personal_value_list": [
+    "yyy",
+    "zzz",
+    "xxx"
+  ],
+  "customize_info": {
+    "title": "yy",
+    "info_list": [
+      "zz",
+      "xx",
+      "yy"
+    ]
+  },
+  "what_can_i_do_title": "zz",
+  "what_can_i_do": [
+    {
+      "label": "xx",
+      "labels": [
+        "yy",
+        "zz",
+        "xx",
+        "yy",
+        "zz"
+      ],
+      "data": [
+        60,
+        80,
+        90,
+        75,
+        75
+      ],
+      "button_text": "zz"
+    },
+    {
+      "label": "zz",
+      "labels": [
+        "Wzz",
+        "車載zzid)",
+        "交zz通",
+        "Anzzプリ",
+        "認証zzS)"
+      ],
+      "data": [
+        80,
+        50,
+        50,
+        60,
+        75
+      ],
+      "button_text": "業務zz験"
+    }
+  ],
+  "skill_point_title": "スキルzz",
+  "skill_point": {
+    "label": "スキルzz点（zz的）",
+    "labels": [
+      "Java",
+      "JavaScript",
+      "React",
+      "TypeScript",
+      "SQL",
+      "Android"
+    ],
+    "data": [
+      70,
+      80,
+      80,
+      60,
+      60,
+      40
+    ]
+  },
+  "timeline_list": [
+    {
+      "project_code": "guowei_201907",
+      "start_time": "201907",
+      "end_time": "",
+      "project_name": "e1234ス",
+      "dev_tool_list": [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "React",
+        "PostgreSQL",
+        "VSCode",
+        "redmine",
+        "GitLab",
+        "Mattermost",
+        "Docker"
+      ],
+      "process_list": [
+        "基本設計",
+        "詳細設計",
+        "実装",
+        "試験",
+        "運用"
+      ],
+      "description": "スマ1234。<br />サーバー1234。<br />クライ1234",
+      "detail_list": [
+        "1234",
+        "1234"
+      ]
+    },
+    {
+      "project_code": "guowei_201901",
+      "start_time": "201901",
+      "end_time": "201906",
+      "project_name": "文書管理システム",
+      "dev_tool_list": [
+        "Java",
+        "Struts",
+        "Oracle",
+        "weblogic",
+        "tomcat",
+        "Eclipse"
+      ],
+      "process_list": [
+        "基本設計",
+        "詳細設計",
+        "実装",
+        "試験"
+      ],
+      "description": "現134",
+      "detail_list": [
+        "基本設計書の修正および補足。",
+        "詳細設計。",
+        "コーディング。",
+        "不具合対応。"
+      ]
+    }
+  ]
+}

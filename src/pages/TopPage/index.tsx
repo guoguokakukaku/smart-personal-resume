@@ -104,7 +104,7 @@ const TopPage: FC = () => {
 
   return (
     <div className='page top'>
-      <Header type={HEADER_TYPE.TOP} title='' actionFuncs={[]} />
+      <Header type={HEADER_TYPE.TOP} title='基本情報' actionFuncs={[]} />
 
       <div>
         <img src={userContext.user.basic.photo} alt='Logo' className='selfy-logo' />

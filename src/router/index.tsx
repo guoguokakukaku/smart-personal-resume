@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, MemoryRouter } from 'react-router-dom'
+import { Routes, Route, MemoryRouter } from 'react-router-dom'
 import TopPage from '../pages/TopPage'
 import TimelinePage from '../pages/TimelinePage'
 import ProjectPage from '../pages/ProjectPage'
@@ -11,6 +11,7 @@ import { MsalProvider } from '@azure/msal-react'
 import { MsalResultContext, useMaslResultContext } from '../hooks/MsalResultContext'
 
 export default function Router() {
+  console.log('Router page render...')
   // 这里的user是一个自定义hook，组件树中取得userContext，并可以调用setUser方法更新
   const user = useUserContext()
   const msalResult = useMaslResultContext()
@@ -24,7 +25,7 @@ export default function Router() {
     <UserContext.Provider value={user}>
       <MsalProvider instance={msalInstance}>
         <MsalResultContext.Provider value={msalResult}>
-          <BrowserRouter>
+          <MemoryRouter>
             <Routes>
               <Route path='/top' element={<TopPage />}></Route>
               <Route path='/project' element={<ProjectPage />}></Route>
@@ -32,7 +33,7 @@ export default function Router() {
               <Route path='/error' element={<Error />}></Route>
               <Route path='*' element={<LoadingPage />}></Route>
             </Routes>
-          </BrowserRouter>
+          </MemoryRouter>
         </MsalResultContext.Provider>
       </MsalProvider>
     </UserContext.Provider>

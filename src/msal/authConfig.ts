@@ -4,6 +4,7 @@
  */
 
 import { LogLevel } from '@azure/msal-browser'
+import URL from '../env_configuration.json'
 
 /**
  * Configuration object to be passed to MSAL instance on creation.
@@ -14,12 +15,12 @@ export const msalConfig = {
   auth: {
     // Enter_the_Application_Id_Here
     // 已注册应用程序的应用程序（客户端）ID。
-    clientId: '3c5ffcd9-6329-4ad3-bf46-65a01e902d65',
+    clientId: URL.CLIENT_ID,
     // Enter_the_Cloud_Instance_Id_Here/Enter_the_Tenant_Info_Here
     // Enter_the_Cloud_Instance_Id_Here:在其中注册应用程序的 Azure 云实例。 对于主要（或全球）Azure 云，请输入 https://login.microsoftonline.com。 对于国家/地区云（例如中国云），可以在国家/地区云中找到相应值。
     // Enter_the_Tenant_Info_Here:设置为以下选项之一：如果应用程序支持此组织目录中的帐户，请将此值替换为目录（租户）ID 或租户名称（例如 contoso.microsoft.com）。 如果应用程序支持“任何组织目录中的帐户”，请将此值替换为 organizations。 如果应用程序支持“任何组织目录中的帐户和个人 Microsoft 帐户”，请将此值替换为 common。 若要限制对“仅限个人 Microsoft 帐户”的支持，请将此值替换为 consumers。
     authority: 'https://login.microsoftonline.com/common',
-    redirectUri: 'http://localhost:3000/',
+    redirectUri: URL.REDIRECT_URL,
   },
   cache: {
     cacheLocation: 'sessionStorage', // This configures where your cache will be stored
