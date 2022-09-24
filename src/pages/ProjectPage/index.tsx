@@ -13,6 +13,7 @@ type State = {
 }
 
 const ProjectPage: FC = () => {
+  console.log('project page render...')
   const navigate = useNavigate()
   const userContext = React.useContext(UserContext)
   console.log('project page: ', userContext.user.basic.name)
@@ -34,7 +35,6 @@ const ProjectPage: FC = () => {
     navigate('/timeline', { state: { searchValue: searchValue } })
   }
 
-  console.log('project page render...')
   return (
     <div className='page project'>
       <Header type={HEADER_TYPE.COMMON} title='案件詳細' actionFuncs={[handleNavBack]} />

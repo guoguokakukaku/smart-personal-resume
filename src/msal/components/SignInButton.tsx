@@ -1,6 +1,7 @@
 import { useMsal } from '@azure/msal-react'
 import { loginRequest } from '../authConfig'
 import { Button } from 'antd'
+import './style.less'
 
 /**
  * Renders a drop down button with child buttons for logging in with a popup or redirect
@@ -20,7 +21,7 @@ export const SignInButton = () => {
     }
   }
   return (
-    <Button type='primary' onClick={() => handleLogin('redirect')}>
+    <Button type='primary' className='login-button' onClick={() => handleLogin('redirect')}>
       サインイン
     </Button>
   )
