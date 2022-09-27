@@ -41,7 +41,10 @@ const ProjectSummaryView: FC<Props> = (props) => {
   return (
     <div className='project-summary'>
       <div className='period'>
-        {props.project.start_time}～{props.project.end_time ? props.project.end_time : '現在'}
+        {`${props.project.start_time.substring(0, 4)}年${props.project.start_time.substring(4, 6)}月`}～
+        {props.project.end_time
+          ? `${props.project.end_time.substring(0, 4)}年${props.project.end_time.substring(4, 6)}月`
+          : '現在'}
       </div>
       <Divider className='divider' />
       <div className='title'>{props.project.project_name}</div>
