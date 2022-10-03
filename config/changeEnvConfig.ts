@@ -5,7 +5,6 @@ function preCheck() {
   const path = require('path')
   const appDirectory = fs.realpathSync(process.cwd())
   const configPath = path.resolve(appDirectory, 'config')
-  const publicPath = path.resolve(appDirectory, 'public')
   const srcPath = path.resolve(appDirectory, 'src')
 
   // 全環境変数定義ファイル
