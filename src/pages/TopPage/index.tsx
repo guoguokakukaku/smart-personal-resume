@@ -87,7 +87,8 @@ const TopPage: FC = () => {
     })
   }
 
-  // theme変更メソッド
+  // TODO: theme変更メソッド
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleClick = () => {
     changePrimaryColor('#00FF00')
     // setSelfImg(female)
