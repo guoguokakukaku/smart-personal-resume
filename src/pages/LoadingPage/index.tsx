@@ -125,11 +125,14 @@ const LoadingPage: FC = () => {
     // projectImagesFolderId: string
   ): Promise<User> => {
     for (let item of projectImagesSubFolderList.value) {
+      console.log(item)
       for (let project of resumeJsonFile.timeline_list) {
         if (project.project_code === item.name) {
+          console.log(item.id)
           const projectImagesList = (await callMsGraph2OneDriveByItemId(accessToken, item.id)) as OneDriveItemInterface
           projectImagesList.value.forEach((item) => {
-            project.image_list.push(item.id)
+            console.log(item.id)
+            project.image_list?.push(item.id)
           })
         }
       }

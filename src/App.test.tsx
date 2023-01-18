@@ -1,9 +1,20 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from 'react'
+import { render, screen } from '@testing-library/react'
+import LoadingPage from './pages/LoadingPage'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+// Navigatorモック準備
+const mockedNavigator = jest.fn()
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedNavigator,
+}))
+
+describe('LoadingPage', () => {
+  test('renders LoadingPage without url param', () => {
+    render(<LoadingPage />)
+    const linkElement = screen.getByText(/次世代履歴書/i)
+    const linkElement2 = screen.getByText(/Microsoft アカウントを持っているこ/i)
+    expect(linkElement).toBeInTheDocument()
+    expect(linkElement2).toBeInTheDocument()
+  })
+})
