@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import LoadingPage from './pages/LoadingPage'
+import LoadingPage from '.././pages/LoadingPage'
 
 // Navigatorモック準備
 const mockedNavigator = jest.fn()
