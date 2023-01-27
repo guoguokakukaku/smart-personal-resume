@@ -1,3 +1,5 @@
+// マイクロソフト認証後(MASL)、OneDriveから内容を取得するコンポネント
+
 import { graphConfig } from './authConfig'
 
 /**
