@@ -239,6 +239,11 @@ const LoadingPage: FC = () => {
             <div>
               <SignInButton />
             </div>
+            <div className='tos'>
+              <div>サンプル用アカウント</div>
+              <div>Account: smart-personal-resume@outlook.jp</div>
+              <div>Password: smartpr2023</div>
+            </div>
           </UnauthenticatedTemplate>
         </>
       )}
