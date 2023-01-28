@@ -18,13 +18,14 @@ import User from '../../model/User'
 import { MsalResultContext, MsalResult } from '../../hooks/MsalResultContext'
 import './index.less'
 import Header from '../../components/HeaderView'
+import LoadOneDriveView from '../../components/LoadOneDriveView'
 import { HEADER_TYPE } from '../../util/common'
 
 const enum STATUS {
   RENDING, // 初始时
   READY, // 等待用户进行msal认证时
   COMMUNICATION, // 认证成功取得oneDrive内容时
-  LOADED,//oneDrive内容载入完了时
+  LOADED, //oneDrive内容载入完了时
 }
 
 const LoadingPage: FC = () => {
@@ -36,110 +37,6 @@ const LoadingPage: FC = () => {
   const [status, setStatus] = useState<STATUS>(STATUS.RENDING)
   const { instance, accounts } = useMsal()
   const [infoMessage, setInfoMessage] = useState<string>()
-
-  // 因为requestJsonData使用了useEffect的hook依赖，他在每次渲染时都发生变化。所以应该将它包装在自己的useCallback中
-  const requestJsonData = useCallback(async () => {
-    console.log('■ useCallback')
-    setStatus(STATUS.COMMUNICATION)
-
-    setInfoMessage('OneDrive情報読み込み中.(resumeフォルダ)')
-    const authentication = await instance.acquireTokenSilent({
-      ...loginRequest,
-      account: accounts[0],
-    })
-    const oneDriveRootFolder = (await callMsGraph2OneDrive(authentication.accessToken)) as OneDriveItemInterface
-    const resume = oneDriveRootFolder.value.filter((x) => {
-      return x.name === 'resume'
-    })[0]
-    if (!resume) {
-      setInfoMessage('OneDrive情報読みに失敗しました。.(resumeフォルダ)')
-      return
-    }
-
-    setInfoMessage('OneDrive情報読み込み中.(resume.jsonファイル)')
-    const resumeFolder = (await callMsGraph2OneDriveByItemId(
-      authentication.accessToken,
-      resume.id
-    )) as OneDriveItemInterface
-    // resume jsonファイルのアイテム
-    const resumeItem = resumeFolder.value.filter((item) => {
-      return item.name === 'resume.json'
-    })[0]
-    if (!resumeItem) {
-      setInfoMessage('OneDrive情報読みに失敗しました。.(resume.jsonファイル)')
-      return
-    }
-
-    // self画像ファイルのアイテム
-    setInfoMessage('OneDrive情報読み込み中.(self.png|jpgファイル)')
-    const selfImgItem = resumeFolder.value.filter((x) => {
-      return x.name === 'self.png' || x.name === 'self.jpg'
-    })[0]
-    if (!selfImgItem) {
-      setInfoMessage('OneDrive情報読みに失敗しました。.(self.png|jpgファイル)')
-      return
-    }
-
-    setInfoMessage('OneDrive情報読み込み中.(resume.jsonファイル内容取得中)')
-    const resumeJsonFile = (await callMsGraph2OneDriveResumeJsonContentByItemId(
-      authentication.accessToken,
-      resumeItem.id
-    )) as User
-    resumeJsonFile.type = USER_TYPE.NETWORK
-
-    setInfoMessage('OneDrive情報読み込み中.(self.png|jpgファイル内容取得中)')
-    const selfImgFile = await callMsGraph2OneDriveImgContentByItemId(authentication.accessToken, selfImgItem.id)
-    resumeJsonFile.basic.photo = selfImgFile
-
-    setInfoMessage('OneDrive情報読み込み中.(プロジェクト画像情報取得中)')
-    const projectImagesFolder = resumeFolder.value.filter((x) => {
-      return x.name === 'project_images'
-    })[0]
-    const projectImagesSubFolderList = (await callMsGraph2OneDriveByItemId(
-      authentication.accessToken,
-      projectImagesFolder.id
-    )) as OneDriveItemInterface
-    const user = await editImageId(projectImagesSubFolderList, resumeJsonFile, authentication.accessToken)
-
-    // 認証結果保存
-    const result: MsalResult = {
-      accessToken: authentication.accessToken,
-      account: accounts[0],
-    }
-    msalResultContext.setResult(result)
-    userContext.setUser(user)
-    setStatus(STATUS.LOADED)
-  }, [accounts, instance, msalResultContext, userContext])
-
-  /**
-   * OneDriveでプロジェクトの関連イメージIDを取得し、resume jsonファイル対象に書き込んで戻るメソッドである
-   * @param projectImagesSubFolderList
-   * @param resumeJsonFile オリジナルresume jsonファイル対象
-   * @param accessToken token
-   * @param projectImagesFolderId
-   * @returns プロジェクトの関連イメージID編集後のUser対象
-   */
-  const editImageId = async (
-    projectImagesSubFolderList: OneDriveItemInterface,
-    resumeJsonFile: User,
-    accessToken: string
-    // projectImagesFolderId: string
-  ): Promise<User> => {
-    for (let item of projectImagesSubFolderList.value) {
-      console.log(item)
-      for (let project of resumeJsonFile.timeline_list) {
-        if (project.project_code === item.name) {
-          console.log(item.id)
-          const projectImagesList = (await callMsGraph2OneDriveByItemId(accessToken, item.id)) as OneDriveItemInterface
-          projectImagesList.value.forEach((item) => {
-            console.log(item.id)
-            project.image_list?.push(item.id)
-          })
-        }
-      }
-    }
-    return resumeJsonFile
-  }
 
   useEffect(() => {
     // ユーザが未取得の場合、取得を行う
@@ -177,13 +74,6 @@ const LoadingPage: FC = () => {
   }, [navigate, userContext, userContext.user])
 
   useEffect(() => {
-    if (accounts.length > 0 && status === STATUS.READY) {
-      // 認証成功の場合、情報取得開始
-      requestJsonData()
-    }
-  }, [accounts.length, requestJsonData, status])
-
-  useEffect(() => {
     if (userContext.user.basic.name) {
       // メインカラーを変更する
       const mergedNextColor = {
@@ -203,17 +93,11 @@ const LoadingPage: FC = () => {
   return (
     <div className='page loading'>
       <Header type={HEADER_TYPE.TOP} title='次世代履歴書' actionFuncs={[]} />
-      {status === STATUS.RENDING
-        ? 'rending'
-        : status === STATUS.COMMUNICATION
-        ? 'communication'
-        : status === STATUS.READY
-        ? 'ready'
-        : 'loaded'}
-      <br />
       {infoMessage}
       <br />
-      <div>{userContext.user.basic.name}</div>
+      {/* {accounts.length > 0 && status === STATUS.READY && <LoadOneDriveView />} */}
+      <LoadOneDriveView />
+      <div>{userContext.user.basic.name && <div> Welcome back {userContext.user.basic.name}</div>}</div>
       {status !== STATUS.RENDING && (
         <>
           <AuthenticatedTemplate></AuthenticatedTemplate>
@@ -240,8 +124,8 @@ const LoadingPage: FC = () => {
             </div>
             <div className='tos'>
               <div>サンプル用アカウント</div>
-              <div>Account: smart-personal-resume@outlook.jp</div>
-              <div>Password: smartpr2023</div>
+              <div>User: smart-personal-resume@outlook.jp</div>
+              <div>Pwd: smartpr2023</div>
             </div>
           </UnauthenticatedTemplate>
         </>
