@@ -20,9 +20,9 @@ export const msalConfig = {
     // Enter_the_Cloud_Instance_Id_Here/Enter_the_Tenant_Info_Here
     // Enter_the_Cloud_Instance_Id_Here:在其中注册应用程序的 Azure 云实例。 对于主要（或全球）Azure 云，请输入 https://login.microsoftonline.com。 对于国家/地区云（例如中国云），可以在国家/地区云中找到相应值。
     // Enter_the_Tenant_Info_Here:设置为以下选项之一：
-    // ・如果应用程序支持此组织目录中的帐户，请将此值替换为目录（租户）ID 或租户名称（例如 contoso.microsoft.com）。 
-    // ・如果应用程序支持“任何组织目录中的帐户”，请将此值替换为 organizations。 
-    // ・如果应用程序支持“任何组织目录中的帐户和个人 Microsoft 帐户”，请将此值替换为 common。 
+    // ・如果应用程序支持此组织目录中的帐户，请将此值替换为目录（租户）ID 或租户名称（例如 contoso.microsoft.com）。
+    // ・如果应用程序支持“任何组织目录中的帐户”，请将此值替换为 organizations。
+    // ・如果应用程序支持“任何组织目录中的帐户和个人 Microsoft 帐户”，请将此值替换为 common。
     // ・若要限制对“仅限个人 Microsoft 帐户”的支持，请将此值替换为 consumers。
     authority: 'https://login.microsoftonline.com/common',
     // 认证成功后右微软认证网页重定向到自己的app的url
@@ -41,16 +41,16 @@ export const msalConfig = {
         }
         switch (level) {
           case LogLevel.Error:
-            console.error("■msal: " + message)
+            console.error('■ msal: ' + message)
             return
           case LogLevel.Info:
-            console.info("■msal: " + message)
+            console.info('■ msal: ' + message)
             return
           case LogLevel.Verbose:
-            console.debug("■msal: " + message)
+            console.debug('■ msal: ' + message)
             return
           case LogLevel.Warning:
-            console.warn("■msal: " + message)
+            console.warn('■ msal: ' + message)
             return
         }
       },
