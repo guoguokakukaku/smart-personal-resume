@@ -10,6 +10,7 @@ import './index.less'
 import Header from '../../components/HeaderView'
 import LoadOneDriveView from '../../components/LoadOneDriveView'
 import { HEADER_TYPE } from '../../util/common'
+import { QRCodeSVG } from 'qrcode.react'
 
 const enum STATUS {
   RENDING, // 初始时
@@ -110,9 +111,20 @@ const LoadingPage: FC = () => {
               <SignInButton />
             </div>
             <div className='tos'>
-              <div>サンプル用アカウント</div>
-              <div>User: smart-personal-resume@outlook.jp</div>
-              <div>Pwd: smartpr2023</div>
+              <div className='title'>サンプル用アカウント</div>
+              <div>ﾕｰｻﾞ: smart-personal-resume@outlook.jp</div>
+              <div>ﾊﾟｽﾜｰﾄﾞ: smartpr2023</div>
+            </div>
+            <div className='tos'>
+              <div className='title'>
+                スマートフォンでアクセスする場合
+                <br />
+                下記QRコードを読み込んでください
+                <br />
+              </div>
+              <div className='qrcode'>
+                <QRCodeSVG value='https://reactjs.org/' />
+              </div>
             </div>
           </UnauthenticatedTemplate>
         </>
