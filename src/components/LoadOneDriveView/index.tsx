@@ -1,7 +1,6 @@
-import React, { FC, Fragment, useState, useEffect, useContext, useMemo } from 'react'
+import React, { FC, useState, useEffect, useContext, useMemo } from 'react'
 import './index.less'
 import { LoadingOutlined, CheckCircleOutlined, CloseCircleOutlined, LineOutlined } from '@ant-design/icons'
-import { Spin } from 'antd'
 import { useMsal } from '@azure/msal-react'
 import { loginRequest } from '../../msal/authConfig'
 import {
@@ -15,16 +14,7 @@ import { UserContext } from '../../hooks/UserContext'
 import { MsalResultContext, MsalResult } from '../../hooks/MsalResultContext'
 import User from '../../model/User'
 import { USER_TYPE } from '../../model/User'
-
-import { Avatar, List } from 'antd'
-
-interface Props {
-  // 0: top画面, 1: timelin画面 2: 通常
-  // type: string
-  // title?: string
-  // actionFuncs: Function[]
-  // defaultValue?: string
-}
+import { List } from 'antd'
 
 enum STATUS_CODE {
   READY,
@@ -54,7 +44,7 @@ const statusListInit: STATUS[] = [
   { title: '初期化設定', description: '初期化設定を行ってログインユーザ情報を格納する', statusCode: STATUS_CODE.READY },
 ]
 
-const LoadOneDriveView: FC<Props> = (props) => {
+const LoadOneDriveView: FC = (props) => {
   console.log('show OneDriveReadStatusView')
   const { instance, accounts } = useMsal()
   // 因为已经在router里边进行了初始化，所以这里得到的userContext的值就是useUserContext，里边包含一个user，还有一个设置user的方法。
@@ -68,6 +58,7 @@ const LoadOneDriveView: FC<Props> = (props) => {
       if (description) statusList[index].description = description
       setStatus(statusList.concat())
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
@@ -153,11 +144,9 @@ const LoadOneDriveView: FC<Props> = (props) => {
         accessToken: authentication.accessToken,
         account: accounts[0],
       }
-      setTimeout(() => {
-        msalResultContext.setResult(result)
-        userContext.setUser(user)
-        changeStatus(3, STATUS_CODE.COMPLETE)
-      }, 3000)
+      msalResultContext.setResult(result)
+      userContext.setUser(user)
+      changeStatus(3, STATUS_CODE.COMPLETE)
     }
 
     if (accounts.length > 0) {
