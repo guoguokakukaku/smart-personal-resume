@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect, useState } from 'react'
-import { Divider, Image } from 'antd'
+import { Divider, Image, Spin } from 'antd'
 import './index.less'
 import { BlockOutlined, MessageOutlined, AppstoreAddOutlined } from '@ant-design/icons'
 import ProjectSummaryView from '../ProjectSummaryView'
@@ -47,7 +47,11 @@ const ProjectDetailView: FC<Props> = (props) => {
   }, [msalResultContext.result.accessToken, props.project.image_list, props.project.project_code, props.userType])
 
   if (status === 'rending') {
-    return <div>rending...</div>
+    return (
+      <div className='project-detail-view-loading'>
+        <Spin tip="Loading" size="large"/>
+      </div>
+    )
   }
   console.log('ProjectDetailView page rending.')
   return (
