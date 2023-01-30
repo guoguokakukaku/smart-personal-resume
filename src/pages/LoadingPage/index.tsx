@@ -1,21 +1,11 @@
-import { FC, useEffect, useContext, useState, useCallback } from 'react'
+import { FC, useEffect, useContext, useState } from 'react'
 import { UserContext } from '../../hooks/UserContext'
 import { useNavigate } from 'react-router-dom'
 import { fetchUserInfoFromJsonFile } from '../../mock/api'
 import { ConfigProvider } from 'antd'
 import { USER_TYPE } from '../../model/User'
 import { SignInButton } from '../../msal/components/SignInButton'
-import { loginRequest } from '../../msal/authConfig'
-import {
-  callMsGraph2OneDrive,
-  callMsGraph2OneDriveByItemId,
-  callMsGraph2OneDriveImgContentByItemId,
-  OneDriveItemInterface,
-  callMsGraph2OneDriveResumeJsonContentByItemId,
-} from '../../msal/graph'
-import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react'
-import User from '../../model/User'
-import { MsalResultContext, MsalResult } from '../../hooks/MsalResultContext'
+import { AuthenticatedTemplate, UnauthenticatedTemplate } from '@azure/msal-react'
 import './index.less'
 import Header from '../../components/HeaderView'
 import LoadOneDriveView from '../../components/LoadOneDriveView'
@@ -33,9 +23,7 @@ const LoadingPage: FC = () => {
   const navigate = useNavigate()
   // 因为已经在router里边进行了初始化，所以这里得到的userContext的值就是useUserContext，里边包含一个user，还有一个设置user的方法。
   const userContext = useContext(UserContext)
-  const msalResultContext = useContext(MsalResultContext)
   const [status, setStatus] = useState<STATUS>(STATUS.RENDING)
-  const { instance, accounts } = useMsal()
   const [infoMessage, setInfoMessage] = useState<string>()
 
   useEffect(() => {
@@ -86,7 +74,7 @@ const LoadingPage: FC = () => {
       })
       setTimeout(() => {
         navigate('/top')
-      }, 1000)
+      }, 2000)
     }
   }, [navigate, userContext.user.basic.color, userContext.user.basic.name])
 
@@ -95,7 +83,6 @@ const LoadingPage: FC = () => {
       <Header type={HEADER_TYPE.TOP} title='次世代履歴書' actionFuncs={[]} />
       {infoMessage}
       <br />
-      {/* {accounts.length > 0 && status === STATUS.READY && <LoadOneDriveView />} */}
       <LoadOneDriveView />
       <div>{userContext.user.basic.name && <div> Welcome back {userContext.user.basic.name}</div>}</div>
       {status !== STATUS.RENDING && (
