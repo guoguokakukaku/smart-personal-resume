@@ -63,8 +63,9 @@ const LoadOneDriveView: FC<Props> = (props) => {
   const [statusList, setStatus] = useState(statusListInit)
 
   const changeStatus = useMemo(
-    () => (index: number, toStatusCode: STATUS_CODE) => {
+    () => (index: number, toStatusCode: STATUS_CODE, description?: string) => {
       statusList[index].statusCode = toStatusCode
+      if (description) statusList[index].description = description
       setStatus(statusList.concat())
     },
     []
@@ -99,7 +100,7 @@ const LoadOneDriveView: FC<Props> = (props) => {
         return item.name === 'resume.json'
       })[0]
       if (!resumeItem) {
-        changeStatus(1, STATUS_CODE.ERROR)
+        changeStatus(1, STATUS_CODE.ERROR, 'resume.jsonファイルが存在しません')
         return
       }
       // step3 self画像ファイルのアイテム
@@ -107,7 +108,7 @@ const LoadOneDriveView: FC<Props> = (props) => {
         return x.name === 'self.png' || x.name === 'self.jpg'
       })[0]
       if (!selfImgItem) {
-        changeStatus(1, STATUS_CODE.ERROR)
+        changeStatus(1, STATUS_CODE.ERROR, 'self.jpgかself.pngファイルが存在しません')
         return
       }
       // step4 -(resume.jsonファイル内容取得中
@@ -116,7 +117,7 @@ const LoadOneDriveView: FC<Props> = (props) => {
         resumeItem.id
       )) as User
       if (!resumeJsonFile) {
-        changeStatus(1, STATUS_CODE.ERROR)
+        changeStatus(1, STATUS_CODE.ERROR, 'resume.jsonの読み込みに失敗しました。')
         return
       }
       resumeJsonFile.type = USER_TYPE.NETWORK
@@ -130,10 +131,18 @@ const LoadOneDriveView: FC<Props> = (props) => {
       const projectImagesFolder = resumeFolder.value.filter((x) => {
         return x.name === 'project_images'
       })[0]
+      if (!projectImagesFolder) {
+        changeStatus(2, STATUS_CODE.ERROR, 'project_imagesフォルダが存在しません')
+        return
+      }
       const projectImagesSubFolderList = (await callMsGraph2OneDriveByItemId(
         authentication.accessToken,
         projectImagesFolder.id
       )) as OneDriveItemInterface
+      if (!projectImagesSubFolderList) {
+        changeStatus(2, STATUS_CODE.ERROR, 'project_imagesフォルダ読み込みに失敗しました。')
+        return
+      }
       const user = await editImageId(projectImagesSubFolderList, resumeJsonFile, authentication.accessToken)
       changeStatus(2, STATUS_CODE.COMPLETE)
 
@@ -148,7 +157,7 @@ const LoadOneDriveView: FC<Props> = (props) => {
         msalResultContext.setResult(result)
         userContext.setUser(user)
         changeStatus(3, STATUS_CODE.COMPLETE)
-      }, 5000)
+      }, 3000)
     }
 
     if (accounts.length > 0) {
@@ -214,6 +223,7 @@ const LoadOneDriveView: FC<Props> = (props) => {
                   }
                   title={item.title}
                   description={item.description}
+                  className={`load-onedrive-view-${item.statusCode === STATUS_CODE.ERROR ? 'error' : 'normal'}`}
                 />
               </List.Item>
             )}
