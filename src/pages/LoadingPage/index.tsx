@@ -21,15 +21,14 @@ import Header from '../../components/HeaderView'
 import { HEADER_TYPE } from '../../util/common'
 
 const enum STATUS {
-  RENDING,
-  READY,
-  COMMUNICATION,
-  LOADED,
+  RENDING, // 初始时
+  READY, // 等待用户进行msal认证时
+  COMMUNICATION, // 认证成功取得oneDrive内容时
+  LOADED,//oneDrive内容载入完了时
 }
 
 const LoadingPage: FC = () => {
   console.log('Loading page render...')
-  console.log('Loading page render...' + process.env.REACT_AAA)
   const navigate = useNavigate()
   // 因为已经在router里边进行了初始化，所以这里得到的userContext的值就是useUserContext，里边包含一个user，还有一个设置user的方法。
   const userContext = useContext(UserContext)
@@ -38,7 +37,9 @@ const LoadingPage: FC = () => {
   const { instance, accounts } = useMsal()
   const [infoMessage, setInfoMessage] = useState<string>()
 
+  // 因为requestJsonData使用了useEffect的hook依赖，他在每次渲染时都发生变化。所以应该将它包装在自己的useCallback中
   const requestJsonData = useCallback(async () => {
+    console.log('■ useCallback')
     setStatus(STATUS.COMMUNICATION)
 
     setInfoMessage('OneDrive情報読み込み中.(resumeフォルダ)')
@@ -159,10 +160,8 @@ const LoadingPage: FC = () => {
         if (userName) {
           const fetchData = async () => {
             setInfoMessage('ローカルユーザ情報読み込み中...')
-            console.log('getUserInfoFromJsonFile start')
             const data = await fetchUserInfoFromJsonFile(userName)
             data.basic.photo = require(`../../mock/resume/${userName}/self.png`)
-            console.log('getUserInfoFromJsonFile end')
             data.type = USER_TYPE.LOCAL
             userContext.setUser(data)
           }
@@ -238,6 +237,11 @@ const LoadingPage: FC = () => {
             </div>
             <div>
               <SignInButton />
+            </div>
+            <div className='tos'>
+              <div>サンプル用アカウント</div>
+              <div>Account: smart-personal-resume@outlook.jp</div>
+              <div>Password: smartpr2023</div>
             </div>
           </UnauthenticatedTemplate>
         </>
