@@ -123,7 +123,7 @@ const LoadingPage: FC = () => {
                 <br />
               </div>
               <div className='qrcode'>
-                <QRCodeSVG value='https://reactjs.org/' />
+                <QRCodeSVG value='https://smart-personal-resume.azurewebsites.net/' />
               </div>
             </div>
           </UnauthenticatedTemplate>
