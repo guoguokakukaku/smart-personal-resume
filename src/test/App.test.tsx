@@ -12,7 +12,7 @@ jest.mock('react-router-dom', () => ({
 describe('LoadingPage', () => {
   test('renders LoadingPage without url param', () => {
     render(<LoadingPage />)
-    const linkElement = screen.getByText(/次世代履歴書/i)
+    const linkElement = screen.getByText(/次世代経歴書/i)
     const linkElement2 = screen.getByText(/Microsoft アカウントを持っているこ/i)
     expect(linkElement).toBeInTheDocument()
     expect(linkElement2).toBeInTheDocument()
