@@ -81,7 +81,7 @@ const LoadingPage: FC = () => {
 
   return (
     <div className='page loading'>
-      <Header type={HEADER_TYPE.TOP} title='次世代履歴書' actionFuncs={[]} />
+      <Header type={HEADER_TYPE.TOP} title='次世代経歴書' actionFuncs={[]} />
       {infoMessage}
       <br />
       <LoadOneDriveView />
