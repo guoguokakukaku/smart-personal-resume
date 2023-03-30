@@ -28,6 +28,16 @@ const LoadingPage: FC = () => {
   const [infoMessage, setInfoMessage] = useState<string>()
 
   useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
+      for (const device of devices) {
+        if (device.kind === 'videoinput') {
+          alert(device.label)
+        }
+      }
+    })
+  }, [])
+
+  useEffect(() => {
     // ユーザが未取得の場合、取得を行う
     if (!userContext.user.basic.name) {
       let urlParamStr = window.location.search
