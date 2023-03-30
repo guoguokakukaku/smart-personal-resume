@@ -28,7 +28,7 @@ const LoadingPage: FC = () => {
   const [infoMessage, setInfoMessage] = useState<string>()
 
   useEffect(() => {
-    navigator.mediaDevices.enumerateDevices().then((devices) => {
+    navigator.mediaDevices && navigator.mediaDevices.enumerateDevices().then((devices) => {
       for (const device of devices) {
         if (device.kind === 'videoinput') {
           alert(device.label)
