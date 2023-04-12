@@ -162,7 +162,7 @@ const TopPage: FC = () => {
             </div>
             <Divider />
             <div className='footer'>
-              <div className='common-button' onClick={() => handleTimeLineClick()}>
+              <div className='common-button common-poyoyon3' onClick={() => handleTimeLineClick()}>
                 開発履歴はこちら
               </div>
             </div>

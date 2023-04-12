@@ -94,7 +94,7 @@ export async function callMsGraph2OneDriveResumeJsonContentByItemId(accessToken:
  * Attaches a given access token to a MS Graph API call. Returns information about the user
  * @param accessToken
  */
-export async function callMsGraph2OneDriveImgContentByItemId(accessToken: string, id: string) {
+export async function callMsGraph2OneDriveImgContentByItemId(accessToken: string, id: string): Promise<string> {
   const headers = new Headers()
   const bearer = `Bearer ${accessToken}`
 

@@ -48,3 +48,34 @@
 .common-button:active {
   opacity: 0.7;
 }
+
+.common-poyoyon3 {
+  animation: poyoyon3 4s infinite;
+  opacity: 1;
+}
+
+@keyframes poyoyon3 {
+  0%,
+  40% {
+    transform: skew(0deg, 0deg);
+  }
+
+  1% {
+    transform: skew(2deg, 2deg);
+  }
+  2% {
+    transform: skew(-2deg, -2deg);
+  }
+  3% {
+    transform: skew(2deg, 2deg);
+  }
+  4% {
+    transform: skew(-2deg, -2deg);
+  }
+  5% {
+    transform: skew(0deg, 0deg);
+  }
+  100% {
+    transform: skew(0deg, 0deg);
+  }
+}

@@ -33,11 +33,11 @@ const ProjectDetailView: FC<Props> = (props) => {
       setProjectImageListJSX(jsxList)
       setStatus('loaded')
     } else if (props.userType === USER_TYPE.NETWORK) {
-      const list = props.project.image_list.map((imageId) => {
+      const urlList = props.project.image_list.map((imageId) => {
         return callMsGraph2OneDriveImgContentByItemId(msalResultContext.result.accessToken, imageId)
       })
-      Promise.all(list).then((values) => {
-        const jsxList = values.map((i) => {
+      Promise.all(urlList).then((values) => {
+        const jsxList = values.map((i: string) => {
           return <Image key={i} className='img' src={i} />
         })
         setProjectImageListJSX(jsxList)
